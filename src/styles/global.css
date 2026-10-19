@@ -4,6 +4,10 @@
   --color-muted: #62667f;
   --color-accent: #5c55dc;
   --color-accent-deep: #37335f;
+  --color-button-primary-text: #fff;
+  --color-button-primary-start: #37335f;
+  --color-button-primary-end: #5c55dc;
+  --color-button-primary-border: rgb(92 85 220 / 45%);
   --color-cyan: #75ddff;
   --color-violet: #9b87ff;
   --color-pink: #efbaf2;
@@ -110,19 +114,24 @@ a:hover {
 }
 
 .button-primary {
-  color: #fff;
-  border-color: rgb(92 85 220 / 45%);
+  color: var(--color-button-primary-text);
+  border-color: var(--color-button-primary-border);
   background: linear-gradient(
     135deg,
-    var(--color-accent-deep),
-    var(--color-accent)
+    var(--color-button-primary-start),
+    var(--color-button-primary-end)
   );
 }
 
 .button:hover,
 .button:focus-visible {
-  color: #fff;
+  color: var(--color-text);
   transform: translateY(-1px);
+}
+
+.button-primary:hover,
+.button-primary:focus-visible {
+  color: var(--color-button-primary-text);
 }
 
 .site-header {
@@ -370,6 +379,10 @@ main:has(> .page-hero:not(.glass-surface)) {
     --color-muted: #c1c0d7;
     --color-accent: #b2a8ff;
     --color-accent-deep: #f2efff;
+    --color-button-primary-text: #292b46;
+    --color-button-primary-start: #ddd7ff;
+    --color-button-primary-end: #b2a8ff;
+    --color-button-primary-border: rgb(178 168 255 / 65%);
     --color-surface: rgb(39 40 67 / 60%);
     --color-surface-strong: rgb(57 58 92 / 80%);
     --color-border: rgb(217 214 255 / 24%);

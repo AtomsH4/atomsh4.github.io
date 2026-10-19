@@ -17,7 +17,11 @@ const { entry } = Astro.props as { entry: CollectionEntry<'notes'> };
 const { Content } = await render(entry);
 ---
 
-<BaseLayout title={`${entry.data.title} | AtomsH4`}>
+<BaseLayout
+  title={`${entry.data.title} | AtomsH4`}
+  description={entry.data.summary}
+  article={{ title: entry.data.title, pubDate: entry.data.pubDate }}
+>
   <PageHero
     eyebrow="Notes"
     title={entry.data.title}

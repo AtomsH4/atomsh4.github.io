@@ -8,7 +8,7 @@ import { getPublishedEntries } from '../../lib/content';
 const entries = getPublishedEntries(await getCollection('blog'));
 ---
 
-<BaseLayout title="博客 | AtomsH4">
+<BaseLayout title="博客 | AtomsH4" description="系统整理技术实践与思考，记录开源协作、软件架构设计与工程经验。">
   <PageHero eyebrow="Blog" title="博客" description="系统整理技术实践与思考。" />
   <EntryList entries={entries} emptyMessage="博客正在整理中。" collection="blog" />
 </BaseLayout>
