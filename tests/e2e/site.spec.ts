@@ -289,7 +289,7 @@ test('推荐页分类单色弥散背景全局覆盖且首页保持原主题', as
   await page.goto('/');
   const homeBody = page.locator('body');
   await expect(homeBody).not.toHaveClass(/home-recommendation-theme/);
-  await expect(homeBody).toHaveCSS('background-color', 'rgb(238, 241, 249)');
+  await expect(homeBody).toHaveCSS('background-color', 'rgb(245, 247, 252)');
   await expect(page.locator('[data-recommendation-experience]')).toHaveCount(0);
   await expect(
     page.getByRole('heading', { name: '最近推荐', exact: true }),
