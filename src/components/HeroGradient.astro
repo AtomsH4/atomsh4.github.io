@@ -1,0 +1,127 @@
+<hero-gradient class="hero-gradient" aria-hidden="true"></hero-gradient>
+
+<script>
+  import '../features/home/hero-gradient';
+</script>
+
+<style>
+  .hero-gradient {
+    position: absolute;
+    z-index: 0;
+    inset: -4rem;
+    overflow: hidden;
+    pointer-events: none;
+    mask-image:
+      radial-gradient(ellipse 48% 78% at 70% 35%, #000 8%, transparent 84%),
+      radial-gradient(ellipse 32% 62% at 88% 74%, rgb(0 0 0 / 80%), transparent 90%);
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .hero-gradient[data-ready] {
+    opacity: 0.9;
+  }
+
+  .hero-gradient :global(canvas) {
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+    filter: blur(18px);
+    animation: cloud-drift-core 18s ease-in-out -5s infinite alternate paused;
+  }
+
+  .hero-gradient::before,
+  .hero-gradient::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+  }
+
+  .hero-gradient::before {
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 44% 58% at 80% 35%, rgb(189 218 249 / 44%), transparent 80%),
+      radial-gradient(ellipse 36% 54% at 60% 72%, rgb(216 205 243 / 34%), transparent 82%);
+    filter: blur(48px);
+    animation: cloud-drift-back 20s ease-in-out -4s infinite alternate paused;
+  }
+
+  .hero-gradient::after {
+    z-index: 1;
+    background:
+      radial-gradient(ellipse 20% 30% at 64% 48%, rgb(255 255 255 / 72%), transparent 84%),
+      radial-gradient(ellipse 24% 27% at 85% 72%, rgb(248 251 255 / 58%), transparent 86%);
+    filter: blur(14px);
+    animation: cloud-drift-front 14s ease-in-out -3s infinite alternate paused;
+  }
+
+  .hero-gradient[data-running]::before,
+  .hero-gradient[data-running]::after,
+  .hero-gradient[data-running] :global(canvas) {
+    animation-play-state: running;
+  }
+
+  @keyframes cloud-drift-back {
+    0% {
+      transform: translate(6%, -4%) scale(1, 0.94) rotate(-6deg);
+    }
+    50% {
+      transform: translate(-9%, 7%) scale(1.14, 1.04) rotate(2deg);
+    }
+    100% {
+      transform: translate(8%, -6%) scale(1.04, 1.12) rotate(6deg);
+    }
+  }
+
+  @keyframes cloud-drift-front {
+    0% {
+      transform: translate(9%, 6%) scale(0.9, 1.08) rotate(8deg);
+    }
+    50% {
+      transform: translate(-10%, -8%) scale(1.16, 0.92) rotate(-5deg);
+    }
+    100% {
+      transform: translate(6%, 9%) scale(0.96, 1.18) rotate(-8deg);
+    }
+  }
+
+  @keyframes cloud-drift-core {
+    0% {
+      transform: translate(4%, -3%) scale(1.03);
+    }
+    50% {
+      transform: translate(-5%, 4%) scale(1.13);
+    }
+    100% {
+      transform: translate(5%, -2%) scale(1.06);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .hero-gradient::before {
+      background:
+        radial-gradient(ellipse 44% 58% at 80% 35%, rgb(120 156 203 / 18%), transparent 80%),
+        radial-gradient(ellipse 36% 54% at 60% 72%, rgb(166 143 207 / 14%), transparent 82%);
+    }
+
+    .hero-gradient::after {
+      background:
+        radial-gradient(ellipse 20% 30% at 64% 48%, rgb(198 212 242 / 16%), transparent 84%),
+        radial-gradient(ellipse 24% 27% at 85% 72%, rgb(211 211 239 / 12%), transparent 86%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-gradient {
+      display: none;
+    }
+
+    .hero-gradient::before,
+    .hero-gradient::after,
+    .hero-gradient :global(canvas) {
+      animation: none;
+    }
+  }
+</style>
