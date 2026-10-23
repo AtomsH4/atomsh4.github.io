@@ -211,7 +211,6 @@ main:has(> .page-hero:not(.glass-surface)) {
 
 .home-hero,
 .page-hero,
-.about-entry,
 .about-section {
   padding: clamp(1.5rem, 4vw, 3rem);
 }
@@ -287,7 +286,6 @@ main:has(> .page-hero:not(.glass-surface)) {
 }
 
 .content-section,
-.about-entry,
 .about-section {
   margin-top: clamp(2.5rem, 7vw, 5rem);
 }
@@ -297,7 +295,6 @@ main:has(> .page-hero:not(.glass-surface)) {
 }
 
 .section-heading h2,
-.about-entry h2,
 .about-section h2 {
   margin: 0;
   color: var(--color-accent-deep);
@@ -363,7 +360,6 @@ main:has(> .page-hero:not(.glass-surface)) {
 }
 
 .entry-repository,
-.about-entry a,
 .external-links a {
   color: var(--color-accent-deep);
   font-weight: 700;
