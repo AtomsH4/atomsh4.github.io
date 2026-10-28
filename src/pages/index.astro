@@ -27,44 +27,63 @@ const basePath = import.meta.env.BASE_URL;
       <h1 id="home-title">AtomsH4</h1>
       <p class="home-quote">“Any sufficiently advanced technology is indistinguishable from magic.”</p>
       <a class="button button-primary" href={joinBasePath(basePath, '/blog/')}>
-        浏览博客
+        浏览博客 <span aria-hidden="true">→</span>
       </a>
     </div>
   </section>
 
   <section class="content-section" aria-labelledby="recent-blog-title">
     <div class="section-heading">
-      <p>Latest writing</p>
-      <h2 id="recent-blog-title">最近博客</h2>
+      <div>
+        <p class="eyebrow">Latest writing</p>
+        <h2 id="recent-blog-title">最近博客</h2>
+      </div>
+      <a class="section-link" href={joinBasePath(basePath, '/blog/')}>
+        全部博客 <span aria-hidden="true">→</span>
+      </a>
     </div>
     <EntryList
       entries={recentBlogEntries}
       emptyMessage="博客正在整理中。"
       collection="blog"
+      featured
+      headingLevel="h3"
     />
   </section>
 
   <section class="content-section" aria-labelledby="recent-notes-title">
     <div class="section-heading">
-      <p>Notes</p>
-      <h2 id="recent-notes-title">最近随笔</h2>
+      <div>
+        <p class="eyebrow">Notes</p>
+        <h2 id="recent-notes-title">最近随笔</h2>
+      </div>
+      <a class="section-link" href={joinBasePath(basePath, '/notes/')}>
+        全部随笔 <span aria-hidden="true">→</span>
+      </a>
     </div>
     <EntryList
       entries={recentNoteEntries}
       emptyMessage="随笔正在整理中。"
       collection="notes"
+      headingLevel="h3"
     />
   </section>
 
   <section class="content-section" aria-labelledby="featured-projects-title">
     <div class="section-heading">
-      <p>Selected work</p>
-      <h2 id="featured-projects-title">精选项目</h2>
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 id="featured-projects-title">精选项目</h2>
+      </div>
+      <a class="section-link" href={joinBasePath(basePath, '/projects/')}>
+        全部项目 <span aria-hidden="true">→</span>
+      </a>
     </div>
     <EntryList
       entries={featuredProjects}
       emptyMessage="项目正在整理中。"
       collection="projects"
+      headingLevel="h3"
     />
   </section>
 </BaseLayout>

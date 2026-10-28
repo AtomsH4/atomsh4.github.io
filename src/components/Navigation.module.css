@@ -22,8 +22,9 @@
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-pill);
   color: var(--color-muted);
-  font-size: 0.95rem;
-  font-weight: 650;
+  font-size: 0.875rem;
+  font-weight: 550;
+  transition: color 180ms ease, background-color 180ms ease;
 }
 
 .links a:hover,
@@ -34,30 +35,73 @@
 
 @media (max-width: 760px) {
   .navigation {
-    flex-direction: column;
-    align-items: flex-end;
+    margin-left: auto;
   }
 
   .toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.5rem;
+    gap: 0.625rem;
+    min-height: 2.75rem;
     padding: var(--space-2) var(--space-3);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    color: var(--color-text);
-    background: var(--color-surface-strong);
+    border: 0;
+    border-radius: 0.75rem;
+    color: var(--color-accent-deep);
+    background: var(--color-nav-active);
     font: inherit;
-    font-weight: 650;
+    font-size: 0.8125rem;
+    font-weight: 550;
     cursor: pointer;
   }
 
-  .links {
-    display: none;
+  .menuIcon {
+    position: relative;
+    display: block;
+    width: 1rem;
+    height: 0.875rem;
+  }
+
+  .menuIcon span {
+    position: absolute;
+    left: 0;
     width: 100%;
+    height: 1.5px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 180ms ease;
+  }
+
+  .menuIcon span:first-child {
+    top: 3px;
+  }
+
+  .menuIcon span:last-child {
+    bottom: 3px;
+  }
+
+  .menuIcon[data-open='true'] span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+
+  .menuIcon[data-open='true'] span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  .links {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    left: 0;
+    display: none;
     flex-direction: column;
     align-items: stretch;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    border: 1px solid var(--color-card-border);
+    border-radius: 1.125rem;
+    background: var(--color-menu);
+    box-shadow: var(--shadow-glass);
   }
 
   .links[data-open='true'] {
@@ -65,6 +109,14 @@
   }
 
   .links a {
-    text-align: right;
+    min-height: 2.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.625rem;
+    font-size: 0.9375rem;
+  }
+
+  .links a:hover,
+  .links a[aria-current='page'] {
+    background: var(--color-nav-active);
   }
 }

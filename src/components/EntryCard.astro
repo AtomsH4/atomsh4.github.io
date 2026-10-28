@@ -7,9 +7,16 @@ type Props = {
   href: string;
   kind?: 'own' | 'fork' | 'member';
   repository?: string;
+  variant?: 'blog' | 'note' | 'project';
+  featured?: boolean;
+  headingLevel?: 'h2' | 'h3';
 };
 
-const { title, summary, pubDate, tags, href, kind, repository } = Astro.props;
+const {
+  title, summary, pubDate, tags, href, kind, repository,
+  variant = 'blog', featured = false, headingLevel = 'h2',
+} = Astro.props;
+const Heading = headingLevel;
 const formattedPubDate = new Intl.DateTimeFormat('zh-CN', {
   timeZone: 'Asia/Shanghai',
   year: 'numeric',
@@ -19,20 +26,32 @@ const formattedPubDate = new Intl.DateTimeFormat('zh-CN', {
 const titleLinksToRepository = href === repository;
 ---
 
-<article class="entry-card glass-surface">
-  {kind && <p class="entry-kind">{kind}</p>}
-  <h2>
-    {titleLinksToRepository ? (
-      title
-    ) : (
-      <a href={href}>{title}</a>
-    )}
-  </h2>
-  <p>{summary}</p>
-  <time datetime={pubDate.toISOString()}>{formattedPubDate}</time>
-  <ul aria-label="标签">
-    {tags.map((tag) => <li>{tag}</li>)}
-  </ul>
+<article class:list={[
+  'entry-card',
+  `entry-card--${variant}`,
+  { 'entry-card--featured': featured },
+]}>
+  <div class="entry-body">
+    {featured && <p class="entry-feature-label">最新文章</p>}
+    {kind && <p class="entry-kind">{kind}</p>}
+    <Heading class="entry-title">
+      {titleLinksToRepository ? (
+        title
+      ) : (
+        <a href={href}>{title}</a>
+      )}
+    </Heading>
+    <p class="entry-summary">{summary}</p>
+  </div>
+  <div class="entry-meta">
+    <div class="entry-meta-row">
+      <time datetime={pubDate.toISOString()}>{formattedPubDate}</time>
+      {!repository && <span class="entry-arrow" aria-hidden="true">→</span>}
+    </div>
+    <ul aria-label="标签">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  </div>
   {repository && (
     <a
       class="entry-repository"
@@ -41,7 +60,8 @@ const titleLinksToRepository = href === repository;
       rel="noreferrer"
       aria-label={`打开 ${title} 仓库（在新标签页打开）`}
     >
-      打开仓库<span class="sr-only">（在新标签页打开）</span>
+      <span>打开仓库<span class="sr-only">（在新标签页打开）</span></span>
+      <span aria-hidden="true">↗</span>
     </a>
   )}
 </article>

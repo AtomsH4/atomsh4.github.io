@@ -81,7 +81,7 @@ test('未知路径显示自定义 404 页面并提供返回首页入口', async 
   ).toHaveAttribute('href', '/');
 });
 
-test('移动端导航可打开并显示导航链接', async ({ page }) => {
+test('移动端导航保持单行并支持展开、Esc 和点击外部收起', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
 
@@ -90,11 +90,20 @@ test('移动端导航可打开并显示导航链接', async ({ page }) => {
     exact: true,
   });
   const toggle = navigation.getByRole('button', {
-    name: '打开导航',
-    exact: true,
+    name: /打开导航|关闭导航/,
   });
 
   await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAccessibleName('打开导航');
+  const brandBox = await page.locator('.site-brand').boundingBox();
+  const toggleBox = await toggle.boundingBox();
+  expect(brandBox).not.toBeNull();
+  expect(toggleBox).not.toBeNull();
+  expect(Math.abs(
+    brandBox!.y + brandBox!.height / 2 - toggleBox!.y - toggleBox!.height / 2,
+  )).toBeLessThan(2);
+
+  const heroBefore = await page.locator('.home-hero').boundingBox();
   await toggle.click();
   await expect(navigation.locator('#site-navigation')).toHaveAttribute(
     'data-open',
@@ -103,6 +112,20 @@ test('移动端导航可打开并显示导航链接', async ({ page }) => {
   await expect(
     navigation.getByRole('link', { name: '博客', exact: true }),
   ).toBeVisible();
+  const heroAfter = await page.locator('.home-hero').boundingBox();
+  expect(heroAfter!.y).toBe(heroBefore!.y);
+
+  await navigation.getByRole('link', { name: '博客', exact: true }).focus();
+  await page.keyboard.press('Escape');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(toggle).toBeFocused();
+  await expect(navigation.locator('#site-navigation')).toBeHidden();
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await page.mouse.click(4, 400);
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(navigation.locator('#site-navigation')).toBeHidden();
 });
 
 test('推荐页提供分类、首批内容和安全外链', async ({ page }) => {

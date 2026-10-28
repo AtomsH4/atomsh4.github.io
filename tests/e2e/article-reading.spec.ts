@@ -46,14 +46,14 @@ for (const width of [390, 1440]) {
   }
 }
 
-test('文章排版不改变首页和列表页的标题', async ({ page }) => {
+test('文章排版与首页品牌标题、列表标题分别保持各自比例', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  for (const path of ['/', '/blog/', '/notes/']) {
+  for (const [path, expectedSize] of [['/', 100], ['/blog/', 64], ['/notes/', 64]] as const) {
     await page.goto(path);
     const fontSize = await page.getByRole('heading', { level: 1 }).evaluate(
       (element) => Number.parseFloat(getComputedStyle(element).fontSize),
     );
-    expect(fontSize).toBe(100);
+    expect(fontSize).toBe(expectedSize);
   }
 });
 
