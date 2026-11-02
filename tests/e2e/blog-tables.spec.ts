@@ -8,7 +8,7 @@ const articles = [
 
 for (const width of [390, 1440]) {
   for (const slug of articles) {
-    test(`只读表格适配正文宽度：${width} ${slug}`, async ({ page }) => {
+    test(`只读表格与正文等宽且对齐：${width} ${slug}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(`/blog/${slug}/`);
       const region = page.locator('article .read-only-table');
@@ -19,12 +19,18 @@ for (const width of [390, 1440]) {
       await expect(region.locator('input, textarea, select, button, [contenteditable]')).toHaveCount(0);
       const metrics = await region.evaluate(element => ({
         width: element.getBoundingClientRect().width,
+        x: element.getBoundingClientRect().x,
         articleWidth: element.closest('article')!.getBoundingClientRect().width,
+        textWidth: element.closest('article')!.querySelector(':scope > p')!.getBoundingClientRect().width,
+        textX: element.closest('article')!.querySelector(':scope > p')!.getBoundingClientRect().x,
         scrollWidth: element.scrollWidth,
         clientWidth: element.clientWidth,
         pageOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       }));
       expect(metrics.width).toBeLessThanOrEqual(metrics.articleWidth);
+      expect(metrics.width).toBe(width === 1440 ? 864 : 350);
+      expect(metrics.width).toBe(metrics.textWidth);
+      expect(Math.abs(metrics.x - metrics.textX)).toBeLessThanOrEqual(1);
       expect(metrics.pageOverflow).toBe(0);
       if (width === 390) expect(metrics.scrollWidth).toBeGreaterThan(metrics.clientWidth);
       else expect(metrics.scrollWidth).toBe(metrics.clientWidth);

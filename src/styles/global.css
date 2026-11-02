@@ -33,7 +33,7 @@
   --shadow-soft: 0 6px 20px rgb(80 82 130 / 5%);
   --shadow-card: 0 4px 18px rgb(59 54 106 / 3%);
   --content-wide: 72rem;
-  --content-prose: 44rem;
+  --content-prose: 54rem;
   --page-gutter: clamp(1.25rem, 4vw, 3rem);
   color-scheme: light;
 }

@@ -16,7 +16,8 @@ for (const width of [390, 1440]) {
         const article = document.querySelector('article.prose')!;
         const hero = document.querySelector('main > .page-hero')!;
         const title = hero.querySelector('h1')!;
-        const bodyBox = article.getBoundingClientRect();
+        const bodyBox = article.querySelector(':scope > p')!.getBoundingClientRect();
+        const articleBox = article.getBoundingClientRect();
         const heroBox = hero.getBoundingClientRect();
         const titleStyle = getComputedStyle(title);
         return {
@@ -24,6 +25,16 @@ for (const width of [390, 1440]) {
           bodyCenter: bodyBox.x + bodyBox.width / 2,
           heroX: heroBox.x,
           bodyX: bodyBox.x,
+          articleWidth: articleBox.width,
+          articleCenter: articleBox.x + articleBox.width / 2,
+          media: [...article.querySelectorAll(':scope > figure')].map(element => {
+            const box = element.getBoundingClientRect();
+            return { width: box.width, center: box.x + box.width / 2 };
+          }),
+          codeBlocks: [...article.querySelectorAll(':scope > pre')].map(element => {
+            const box = element.getBoundingClientRect();
+            return { width: box.width, x: box.x };
+          }),
           heroWidth: heroBox.width,
           viewportWidth: document.documentElement.clientWidth,
           fontSize: Number.parseFloat(titleStyle.fontSize),
@@ -36,12 +47,23 @@ for (const width of [390, 1440]) {
       expect(metrics.fontSize).toBeGreaterThanOrEqual(28);
       expect(metrics.fontSize).toBeLessThanOrEqual(width < 600 ? 32 : 44);
       expect(metrics.lineHeight / metrics.fontSize).toBeGreaterThanOrEqual(1.2);
-      expect(metrics.bodyWidth).toBeLessThanOrEqual(704);
+      expect(metrics.bodyWidth).toBe(width === 1440 ? 864 : 350);
+      expect(metrics.articleWidth).toBe(metrics.bodyWidth);
+      expect(Math.abs(metrics.articleCenter - metrics.viewportWidth / 2)).toBeLessThanOrEqual(1);
       expect(Math.abs(metrics.bodyCenter - metrics.viewportWidth / 2)).toBeLessThanOrEqual(1);
       expect(Math.abs(metrics.heroX - metrics.bodyX)).toBeLessThanOrEqual(1);
       expect(Math.abs(metrics.heroWidth - metrics.bodyWidth)).toBeLessThanOrEqual(1);
       expect(['start', 'left']).toContain(metrics.textAlign);
       expect(metrics.overflow).toBeLessThanOrEqual(0);
+      expect(metrics.media.length + metrics.codeBlocks.length).toBeGreaterThan(0);
+      for (const media of metrics.media) {
+        expect(media.width).toBe(metrics.bodyWidth);
+        expect(Math.abs(media.center - metrics.viewportWidth / 2)).toBeLessThanOrEqual(1);
+      }
+      for (const code of metrics.codeBlocks) {
+        expect(code.width).toBe(metrics.bodyWidth);
+        expect(Math.abs(code.x - metrics.bodyX)).toBeLessThanOrEqual(1);
+      }
     });
   }
 }

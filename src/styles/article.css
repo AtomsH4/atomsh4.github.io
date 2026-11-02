@@ -1,0 +1,91 @@
+body:has(.reading-article) {
+  --page-gutter: clamp(1.25rem, 3.125vw, 2rem);
+}
+
+main:has(> .reading-article) > .page-hero {
+  max-width: var(--content-prose);
+  margin-inline: auto;
+}
+
+main:has(> .reading-article) > .page-hero h1 {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.prose.reading-article {
+  min-width: 0;
+  max-width: var(--content-prose);
+  margin-inline: auto;
+  overflow-wrap: anywhere;
+}
+
+.reading-article > * {
+  min-width: 0;
+  margin-block: 0;
+}
+
+.reading-article > * + * {
+  margin-block-start: 1.25rem;
+}
+
+.reading-article > :is(h2, h3, h4, h5, h6):not(:first-child) {
+  margin-block-start: calc(1.25rem + var(--space-4));
+}
+
+.reading-article pre {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: 0.875em;
+  line-height: 1.6;
+}
+
+.reading-article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.reading-article a {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.reading-article > figure {
+  margin-inline: 0;
+}
+
+.reading-article > figure:not(:first-child),
+.reading-article > figure + * {
+  margin-block-start: var(--space-8);
+}
+
+.reading-article figure a {
+  display: block;
+  border-radius: var(--radius-md);
+  cursor: zoom-in;
+}
+
+.reading-article figure img {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.reading-article figcaption {
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+  font-size: 0.875em;
+  line-height: 1.6;
+}
+
+.reading-article > table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}

@@ -4,6 +4,7 @@ import PageHero from '../../components/PageHero.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedEntries } from '../../lib/content';
 import '../../components/ReadOnlyTable/ReadOnlyTable.css';
+import '../../styles/article.css';
 
 export async function getStaticPaths() {
   const entries = getPublishedEntries(await getCollection('blog'));
@@ -28,78 +29,7 @@ const { Content } = await render(entry);
     title={entry.data.title}
     description={entry.data.summary}
   />
-  <article class="prose blog-article">
+  <article class="prose reading-article blog-article">
     <Content />
   </article>
 </BaseLayout>
-
-<style>
-  :global(main:has(> .blog-article)) {
-    min-width: 0;
-  }
-
-  :global(main:has(> .blog-article) > .page-hero) {
-    max-width: var(--content-prose);
-    margin-inline: auto;
-  }
-
-  :global(main:has(> .blog-article) > .page-hero h1) {
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    line-height: 1.25;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .blog-article {
-    min-width: 0;
-    max-width: var(--content-prose);
-    margin-inline: auto;
-    overflow-wrap: anywhere;
-  }
-
-  .prose :global(pre) {
-    max-width: 100%;
-    overflow-x: auto;
-    padding: var(--space-4);
-    border-radius: var(--radius-md);
-    font-size: 0.875em;
-    line-height: 1.6;
-  }
-
-  .prose :global(img) {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
-
-  .prose :global(a) {
-    color: var(--color-accent-deep);
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
-  }
-
-  .prose :global(figure) {
-    margin: var(--space-8) 0;
-  }
-
-  .prose :global(figure a) {
-    display: block;
-    border-radius: var(--radius-md);
-    cursor: zoom-in;
-  }
-
-  .prose :global(figure img) {
-    display: block;
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-  }
-
-  .prose :global(figcaption) {
-    margin-top: var(--space-3);
-    color: var(--color-muted);
-    font-size: 0.875em;
-    line-height: 1.6;
-  }
-</style>
