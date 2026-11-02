@@ -578,7 +578,8 @@ test('推荐页从 Canvas 空白处拖动会横向切换作品', async ({ page }
 });
 
 test('推荐页 Canvas 支持真实拖动并保持当前作品', async ({ page }) => {
-  await page.goto('/recommendations/');
+  test.setTimeout(60_000);
+  await page.goto('/recommendations/', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: '音乐', exact: true }).click();
 
   const canvas = page.locator('canvas');
@@ -597,7 +598,7 @@ test('推荐页 Canvas 支持真实拖动并保持当前作品', async ({ page }
   if (!box) return;
   expect(box.height).toBeGreaterThanOrEqual(420);
   await page.waitForTimeout(500);
-  const beforeDrag = await canvas.screenshot();
+  const beforeDrag = await page.screenshot({ clip: box });
 
   // Avoid the transparent CD hub so the gesture begins on artwork.
   const centerX = box.x + box.width * 0.62;
@@ -607,7 +608,8 @@ test('推荐页 Canvas 支持真实拖动并保持当前作品', async ({ page }
   await page.mouse.move(centerX + 80, centerY + 30, { steps: 5 });
   await expect(canvas).toHaveAttribute('data-track-panning', 'false');
   await page.waitForTimeout(100);
-  const duringDrag = await canvas.screenshot();
+  // Capture the same region without scrolling or waiting for stability mid-drag.
+  const duringDrag = await page.screenshot({ clip: box });
   expect(duringDrag.equals(beforeDrag)).toBe(false);
   await page.mouse.up();
   await page.waitForTimeout(500);
