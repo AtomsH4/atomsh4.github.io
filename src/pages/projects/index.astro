@@ -9,11 +9,7 @@ const entries = getPublishedEntries(await getCollection('projects'));
 ---
 
 <BaseLayout title="项目 | AtomsH4" description="收录 AtomsH4 正在实践、维护或学习中的公开项目，涵盖 AI 应用、前端工具与完整应用开发。">
-  <PageHero
-    eyebrow="Projects"
-    title="项目"
-    description="收录正在实践、维护或学习中的公开项目。"
-  />
+  <PageHero eyebrow="Projects" title="项目" />
   <section class="content-section" aria-label="项目列表">
     <EntryList entries={entries} emptyMessage="项目正在整理中。" collection="projects" />
   </section>

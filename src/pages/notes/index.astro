@@ -9,10 +9,6 @@ const entries = getPublishedEntries(await getCollection('notes'));
 ---
 
 <BaseLayout title="随笔 | AtomsH4" description="整理算法题解、SQL 练习、学习记录与零散想法。">
-  <PageHero
-    eyebrow="Notes"
-    title="随笔"
-    description="整理算法题解、学习记录与零散想法。"
-  />
+  <PageHero eyebrow="Notes" title="随笔" />
   <EntryList entries={entries} emptyMessage="随笔正在整理中。" collection="notes" />
 </BaseLayout>
