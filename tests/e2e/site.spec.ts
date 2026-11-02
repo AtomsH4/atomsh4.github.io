@@ -129,7 +129,7 @@ test('移动端导航保持单行并支持展开、Esc 和点击外部收起', a
 });
 
 test('推荐页提供分类、首批内容和安全外链', async ({ page }) => {
-  await page.goto('/recommendations/');
+  await page.goto('/recommendations/', { waitUntil: 'domcontentloaded' });
 
   await expect(
     page.getByRole('heading', { name: '推荐', exact: true }),
