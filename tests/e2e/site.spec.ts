@@ -84,6 +84,7 @@ test('未知路径显示自定义 404 页面并提供返回首页入口', async 
 test('移动端导航保持单行并支持展开、Esc 和点击外部收起', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
+  await expect(page.locator('home-intro')).toBeHidden({ timeout: 8000 });
 
   const navigation = page.getByRole('navigation', {
     name: '主导航',
@@ -336,13 +337,14 @@ test('推荐页支持作品深链', async ({ page }) => {
 });
 
 test('推荐页支持根节点键盘循环和分类首项切换', async ({ page }) => {
-  await page.goto('/recommendations/#wo-biao-shi-li-jie');
+  await page.goto('/recommendations/#wo-biao-shi-li-jie', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('推荐');
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 
   const experience = page.locator('[data-recommendation-experience]');
   const status = page.getByRole('status');
+  await expect(page.locator('astro-island').filter({ has: experience })).not.toHaveAttribute('ssr', '');
   await expect(
     page.getByRole('heading', { name: '我表示理解', level: 2 }),
   ).toBeVisible();

@@ -68,9 +68,15 @@ for (const width of [390, 1440]) {
   }
 }
 
-test('文章排版与首页品牌标题、列表标题分别保持各自比例', async ({ page }) => {
+test('首页展示品牌签名，文章列表标题保持原有字号', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  for (const [path, expectedSize] of [['/', 100], ['/blog/', 64], ['/notes/', 64]] as const) {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const brand = page.getByRole('heading', { name: 'AtomsH', exact: true, level: 1 });
+  await expect(brand).toBeVisible();
+  await expect(brand.locator('svg[data-home-signature]')).toBeVisible();
+
+  for (const [path, expectedSize] of [['/blog/', 64], ['/notes/', 64]] as const) {
     await page.goto(path);
     const fontSize = await page.getByRole('heading', { level: 1 }).evaluate(
       (element) => Number.parseFloat(getComputedStyle(element).fontSize),

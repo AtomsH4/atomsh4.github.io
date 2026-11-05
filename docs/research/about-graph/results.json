@@ -1,0 +1,115 @@
+{
+  "kind": "numerical feasibility probe; not a UI/FPS benchmark",
+  "node": "v24.15.0",
+  "topology": {
+    "nodes": 17,
+    "edges": 16,
+    "depth": 2,
+    "thirdLevelParentModel": true
+  },
+  "modules": [
+    {
+      "name": "d3-force",
+      "rawBytes": 15623,
+      "gzipBytes": 5865
+    },
+    {
+      "name": "react-force-graph-2d",
+      "rawBytes": 186122,
+      "gzipBytes": 61924
+    }
+  ],
+  "checks": {
+    "ssrImport": true,
+    "rootFixed": true,
+    "canonicalImmutable": true,
+    "numericalDragRelease": true
+  },
+  "desktop": {
+    "stageWidth": 1120,
+    "stageHeight": 620,
+    "geometry": {
+      "overlaps": [],
+      "outside": [],
+      "extent": {
+        "left": -362.6049573030979,
+        "right": 402.7548066472799,
+        "top": -257.257541653954,
+        "bottom": 265.86742337447765
+      }
+    }
+  },
+  "focusedMobile": {
+    "stageWidth": 280,
+    "stageHeight": 560,
+    "branches": [
+      {
+        "branch": "音乐",
+        "nodes": 5,
+        "geometry": {
+          "overlaps": [],
+          "outside": [],
+          "extent": {
+            "left": -95.89168457812951,
+            "right": 96.84874439526452,
+            "top": -234,
+            "bottom": 216.06025484526396
+          }
+        }
+      },
+      {
+        "branch": "编程",
+        "nodes": 5,
+        "geometry": {
+          "overlaps": [],
+          "outside": [],
+          "extent": {
+            "left": -100.89168457812951,
+            "right": 96.84874439526452,
+            "top": -234,
+            "bottom": 216.06025484526396
+          }
+        }
+      },
+      {
+        "branch": "二次元",
+        "nodes": 4,
+        "geometry": {
+          "overlaps": [],
+          "outside": [],
+          "extent": {
+            "left": -107.62250246404197,
+            "right": 95.62309283218572,
+            "top": -234,
+            "bottom": 106.4685868898996
+          }
+        }
+      },
+      {
+        "branch": "游戏",
+        "nodes": 6,
+        "geometry": {
+          "overlaps": [],
+          "outside": [],
+          "extent": {
+            "left": -116.10447861368769,
+            "right": 97.10474472653792,
+            "top": -234,
+            "bottom": 215.49973286857292
+          }
+        }
+      }
+    ]
+  },
+  "naiveMobile": {
+    "scale": 0.3658410242978932,
+    "scaled44pxTarget": 16.0970050691073
+  },
+  "compute": {
+    "measuredRuns": 30,
+    "warmupRuns": 5,
+    "ticksPerRun": 300,
+    "p50Ms": 16.784125000000017,
+    "p95Ms": 22.67895900000002
+  }
+}

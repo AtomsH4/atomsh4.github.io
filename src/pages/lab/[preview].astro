@@ -1,0 +1,13 @@
+---
+import AboutGraphLayout from '../../layouts/AboutGraphLayout.astro';
+import AboutGraphExperience from '../../features/about-graph/AboutGraphExperience';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { preview: 'about-graph' } }] : [];
+}
+---
+
+<AboutGraphLayout title="兴趣图谱预览 | AtomsH4" description="AtomsH 的交互式兴趣图谱本地预览。" noindex>
+  <h1 class="sr-only">关于 AtomsH</h1>
+  <AboutGraphExperience basePath={import.meta.env.BASE_URL} client:load />
+</AboutGraphLayout>

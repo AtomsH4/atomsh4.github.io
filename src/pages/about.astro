@@ -1,66 +1,9 @@
 ---
-import PageHero from '../components/PageHero.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutGraphLayout from '../layouts/AboutGraphLayout.astro';
+import AboutGraphExperience from '../features/about-graph/AboutGraphExperience';
 ---
 
-<BaseLayout title="关于 AtomsH4" description="了解 AtomsH4 从 AI、开发工具到完整应用的学习与实践，以及公开项目和联系方式。">
-  <PageHero eyebrow="About" title="关于 AtomsH4" />
-
-  <section class="about-section glass-surface prose" aria-labelledby="experience-title">
-    <h2 id="experience-title">经历</h2>
-    <ul class="experience-list">
-      <li>
-        <h3>AI productivity studio</h3>
-        <p>围绕智能聊天、自主 agents、助手生态等方向学习和实践，适合作为主页的核心能力线。</p>
-      </li>
-      <li>
-        <h3>Frontend tools</h3>
-        <p>使用 Rust / Web 工具链探索开发效率，体现工程化和工具思维。</p>
-      </li>
-      <li>
-        <h3>Course selection system</h3>
-        <p>个性化智能选课系统，适合作为早期完整应用经历展示。</p>
-      </li>
-      <li>
-        <h3>Text classification</h3>
-        <p>CNN-RNN 中文文本分类与 TensorFlow 学习经历，作为 AI 学习轨迹补充。</p>
-      </li>
-    </ul>
-  </section>
-
-  <section class="about-section glass-surface prose" aria-labelledby="contact-title">
-    <h2 id="contact-title">联系</h2>
-    <ul class="external-links">
-      <li>
-        <a
-          href="https://github.com/AtomsH4"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="GitHub（在新标签页打开）"
-        >
-          GitHub<span class="sr-only">（在新标签页打开）</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://www.cnblogs.com/atomsh"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Cnblogs（在新标签页打开）"
-        >
-          Cnblogs<span class="sr-only">（在新标签页打开）</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://atomsh4.github.io/"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="GitHub Pages（在新标签页打开）"
-        >
-          GitHub Pages<span class="sr-only">（在新标签页打开）</span>
-        </a>
-      </li>
-    </ul>
-  </section>
-</BaseLayout>
+<AboutGraphLayout title="关于 AtomsH4" description="以 AtomsH 为中心，探索音乐、编程、二次元与游戏交织的兴趣图谱。">
+  <h1 class="sr-only">关于 AtomsH</h1>
+  <AboutGraphExperience basePath={import.meta.env.BASE_URL} client:load />
+</AboutGraphLayout>

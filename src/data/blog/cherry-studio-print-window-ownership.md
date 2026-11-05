@@ -59,7 +59,7 @@ const getCurrentNoteContent = useCallback(() => {
   <a href="/media/blog/cherry-studio-print/flow.svg" aria-label="查看打印流程原图">
     <img src="/media/blog/cherry-studio-print/flow.svg" width="848" height="1152" loading="lazy" decoding="async" alt="笔记打印的职责交接：页面读取当前编辑内容，通过类型化 IPC 交给主进程 PrintService；WindowManager 提供隐藏窗口，PrintService 加载 HTML 并编排打印或 PDF 导出，操作结束后关闭窗口。PDF 保存取消发生在创建窗口之前。" />
   </a>
-  <figcaption>图 1　从当前编辑内容到打印输出的主要职责交接。主进程编排操作，隐藏窗口承载排版；PDF 保存取消时尚未创建窗口，窗口准备失败也需要清理。依据本文固定的合并版本绘制，点击可查看原图。</figcaption>
+  <figcaption>图 1　从当前编辑内容到打印输出的主要职责交接。主进程编排操作，隐藏窗口承载排版；PDF 保存取消时尚未创建窗口，窗口准备失败也需要清理。依据本文固定的合并版本绘制，点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 ## 隐藏窗口复用已有的加载契约

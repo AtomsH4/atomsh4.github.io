@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import EntryList from '../components/EntryList.astro';
 import HeroGradient from '../components/HeroGradient.astro';
+import HomeIntro from '../components/HomeIntro.astro';
+import HomeSignature from '../components/HomeSignature.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedEntries } from '../lib/content';
 import { joinBasePath } from '../lib/site-path';
@@ -20,15 +22,17 @@ const basePath = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="AtomsH4" description="记录 AtomsH4 的技术实践、零散思考与个人项目，分享开源协作、软件架构和算法学习笔记。">
+  <HomeIntro />
   <section class="home-hero glass-surface" aria-labelledby="home-title">
     <HeroGradient />
-    <div class="prose">
-      <p class="eyebrow">个人博客与项目记录</p>
-      <h1 id="home-title">AtomsH4</h1>
-      <p class="home-quote">“Any sufficiently advanced technology is indistinguishable from magic.”</p>
-      <a class="button button-primary" href={joinBasePath(basePath, '/blog/')}>
-        浏览博客 <span aria-hidden="true">→</span>
-      </a>
+    <div class="home-hero-content">
+      <div class="home-hero-identity">
+        <h1 id="home-title" data-signature-target>
+          <span class="sr-only">AtomsH</span>
+          <HomeSignature animated={false} idPrefix="hero-signature" />
+        </h1>
+      </div>
+      <p class="home-quote">Any sufficiently advanced technology is indistinguishable from magic.</p>
     </div>
   </section>
 

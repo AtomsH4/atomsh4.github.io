@@ -1,0 +1,125 @@
+<dialog id="blog-image-lightbox" class="image-lightbox" aria-label="图片预览">
+  <button type="button" class="image-lightbox__close" aria-label="关闭图片预览" autofocus>
+    <img alt="" decoding="async" />
+  </button>
+</dialog>
+
+<script>
+  const article = document.querySelector('.blog-article');
+  const dialog = document.querySelector<HTMLDialogElement>('#blog-image-lightbox');
+  const preview = dialog?.querySelector('img');
+
+  if (article && dialog && preview) {
+    let activeTrigger: HTMLButtonElement | null = null;
+    let readingPosition = { left: 0, top: 0 };
+
+    for (const image of article.querySelectorAll('img')) {
+      const link = image.closest('a');
+      const trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'blog-image-trigger';
+      trigger.setAttribute('aria-label', `放大图片：${image.alt || '文章配图'}`);
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      trigger.setAttribute('aria-controls', dialog.id);
+
+      if (link) {
+        link.replaceWith(trigger);
+        trigger.append(...link.childNodes);
+      } else {
+        image.replaceWith(trigger);
+        trigger.append(image);
+      }
+
+      trigger.addEventListener('click', () => {
+        activeTrigger = trigger;
+        readingPosition = { left: window.scrollX, top: window.scrollY };
+        document.documentElement.style.setProperty(
+          '--blog-image-scrollbar-width',
+          `${window.innerWidth - document.documentElement.clientWidth}px`,
+        );
+        preview.src = image.currentSrc || image.src;
+        preview.alt = image.alt;
+        dialog.showModal();
+      });
+    }
+
+    dialog.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      document.documentElement.style.removeProperty('--blog-image-scrollbar-width');
+      activeTrigger?.focus({ preventScroll: true });
+      window.scrollTo({ ...readingPosition, behavior: 'instant' });
+    });
+  }
+</script>
+
+<style>
+  :global(html:has(.image-lightbox[open])) {
+    padding-inline-end: var(--blog-image-scrollbar-width, 0px);
+  }
+
+  :global(html:has(.image-lightbox[open])),
+  :global(body:has(.image-lightbox[open])) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  :global(.blog-article .blog-image-trigger) {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: zoom-in;
+  }
+
+  .image-lightbox {
+    --lightbox-gutter: clamp(1rem, 3vw, 2rem);
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: var(--lightbox-gutter);
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    cursor: zoom-out;
+  }
+
+  .image-lightbox[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .image-lightbox::backdrop {
+    background: rgb(10 11 24 / 84%);
+  }
+
+  .image-lightbox__close {
+    display: block;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    cursor: zoom-out;
+  }
+
+  .image-lightbox img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 2 * var(--lightbox-gutter));
+    max-height: calc(100dvh - 2 * var(--lightbox-gutter));
+    border-radius: var(--radius-md);
+    object-fit: contain;
+  }
+</style>

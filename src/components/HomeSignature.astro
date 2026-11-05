@@ -1,0 +1,98 @@
+---
+import { signatureLetters } from '../features/home/signature-artwork';
+
+interface Props {
+  animated?: boolean;
+  idPrefix?: string;
+}
+
+const { animated = true, idPrefix = 'home-signature' } = Astro.props;
+---
+
+<svg
+  class="home-signature"
+  data-home-signature
+  viewBox="-50 5 1540 450"
+  width="1540"
+  height="450"
+  aria-hidden="true"
+  focusable="false"
+>
+  {animated && <defs>
+    {signatureLetters.map((letter, index) => (
+      <mask
+        id={`${idPrefix}-${index}`}
+        maskUnits="userSpaceOnUse"
+        x="-60"
+        y="0"
+        width="1620"
+        height="500"
+      >
+        {letter.strokes.map((stroke) => (
+          <path
+            class="signature-stroke"
+            d={stroke.d}
+            pathLength="1"
+            fill="none"
+            stroke="white"
+            stroke-width={stroke.width}
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style={`--stroke-duration: ${stroke.duration}s; --stroke-delay: ${stroke.delay}s;`}
+          />
+        ))}
+      </mask>
+    ))}
+  </defs>}
+  {signatureLetters.map((letter, index) => (
+    <path
+      class="signature-letter"
+      d={letter.outline}
+      fill="currentColor"
+      mask={animated ? `url(#${idPrefix}-${index})` : undefined}
+    />
+  ))}
+</svg>
+
+<style>
+  .home-signature {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 1540 / 450;
+    overflow: visible;
+  }
+
+  .signature-stroke {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: signature-write var(--stroke-duration) cubic-bezier(0.35, 0, 0.4, 1)
+      var(--stroke-delay) both;
+  }
+
+  @keyframes signature-write {
+    from {
+      opacity: 0;
+    }
+
+    1% {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 1;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signature-letter {
+      mask: none;
+    }
+
+    .signature-stroke {
+      animation: none;
+    }
+  }
+</style>

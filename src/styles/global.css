@@ -76,6 +76,7 @@ body:has(.home-hero) {
   --home-glow-cyan: rgb(117 221 255 / 18%);
   --home-glow-violet: rgb(155 135 255 / 15%);
   --home-glow-pink: rgb(239 186 242 / 10%);
+  min-width: 0;
   background:
     radial-gradient(circle at 8% 8%, var(--home-glow-cyan), transparent 32%),
     radial-gradient(circle at 88% 18%, var(--home-glow-violet), transparent 34%),
@@ -247,29 +248,37 @@ main:has(> .page-hero:not(.glass-surface)) {
 }
 
 .home-hero {
+  --home-hero-inset: clamp(1.5rem, 4vw, 3rem);
   position: relative;
   isolation: isolate;
   overflow: hidden;
   margin-bottom: clamp(2.5rem, 7vw, 5rem);
-  padding: clamp(1.75rem, 5vw, 3.5rem);
+  padding: 0;
   background:
     radial-gradient(ellipse at 78% 28%, rgb(117 221 255 / 9%), transparent 68%),
     radial-gradient(ellipse at 62% 76%, rgb(155 135 255 / 9%), transparent 66%),
     var(--color-surface);
 }
 
-.home-hero > .prose {
+.home-hero-content {
   position: relative;
   z-index: 1;
-  max-width: 42rem;
+  min-height: clamp(20rem, 32vw, 25rem);
 }
 
-.home-hero .eyebrow {
-  color: var(--color-accent-deep);
-  color: color-mix(in srgb, var(--color-accent) 72%, var(--color-text));
+.home-hero-identity {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(76%, 54rem);
+  min-width: 0;
+  transform: translate(-4%, -12%);
 }
 
 .home-hero .home-quote {
+  position: absolute;
+  right: var(--home-hero-inset);
+  bottom: var(--home-hero-inset);
   color: var(--color-text);
   color: color-mix(in srgb, var(--color-muted) 40%, var(--color-text));
 }
@@ -289,9 +298,8 @@ main:has(> .page-hero:not(.glass-surface)) {
 .home-hero h1 {
   margin: 0;
   color: var(--color-accent-deep);
-  font-size: clamp(3rem, 10vw, 6.25rem);
-  letter-spacing: -0.07em;
-  line-height: 0.95;
+  font-size: inherit;
+  line-height: 1;
 }
 
 .page-hero h1 {
@@ -302,18 +310,21 @@ main:has(> .page-hero:not(.glass-surface)) {
   line-height: 1.15;
 }
 
-.home-hero h1 + p,
 .page-hero h1 + p {
   margin-top: var(--space-6);
 }
 
 .home-quote {
-  max-width: 44ch;
-  margin-bottom: var(--space-6);
+  max-width: min(44ch, calc(100% - 2 * var(--home-hero-inset)));
+  margin: 0;
   color: var(--color-muted);
-  font-size: 1rem;
-  line-height: 1.75;
-  text-wrap: pretty;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.85;
+  text-align: right;
+  text-wrap: balance;
 }
 
 .content-section,
@@ -777,12 +788,8 @@ main:has(> .page-hero:not(.glass-surface)) {
   }
 
   .home-hero {
-    padding: 1.75rem 1.5rem;
+    padding: 0;
     border-radius: 1.5rem;
-  }
-
-  .home-hero h1 {
-    font-size: clamp(2.75rem, 12vw, 4rem);
   }
 
   .home-quote {
@@ -793,6 +800,16 @@ main:has(> .page-hero:not(.glass-surface)) {
     margin-top: var(--space-6);
     padding-top: var(--space-4);
     font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero-content {
+    min-height: 18.5rem;
+  }
+
+  .home-hero-identity {
+    width: 100%;
   }
 }
 

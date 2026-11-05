@@ -45,7 +45,7 @@ getLifecycleState(id: string): AgentLifecycleState {
   <a href="/media/blog/cherry-studio-trash/states.svg" aria-label="查看回收站状态流转原图">
     <img src="/media/blog/cherry-studio-trash/states.svg" width="752" height="984" loading="lazy" decoding="async" alt="以 Topic 对话为例的回收站状态流转：正常对话可以归档或通过专用入口永久删除，操作前需要满足空闲条件；已归档对话可以恢复或永久删除；记录不存在后无法通过恢复命令找回。" />
   </a>
-  <figcaption>图 1　以 Topic 对话为例的实体状态与合法转换。归档时间同时参与保留期限计算；missing 不保存删除历史。点击图片可查看原图。</figcaption>
+  <figcaption>图 1　以 Topic 对话为例的实体状态与合法转换。归档时间同时参与保留期限计算；missing 不保存删除历史。点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 `deletedAt` 比单纯的 `isDeleted` 多保存了一个重要事实：对象何时进入回收站。自动清理可以使用 `deletedAt < cutoff` 选择过期记录，不必再维护一份可能与状态不同步的归档时间。
@@ -125,7 +125,7 @@ async archiveTopics(topicIds: string[]): Promise<DeleteTopicsResult> {
   <a href="/media/blog/cherry-studio-trash/admission.svg" aria-label="查看归档与新生成竞争的原图">
     <img src="/media/blog/cherry-studio-trash/admission.svg" width="752" height="1104" loading="lazy" decoding="async" alt="并发竞争对比：没有共享锁时，新生成可插入空闲检查与归档之间；取得同一把 dispatch lock 后，在锁内检查未完成工作并同步提交数据库事务，新生成准入不能插入这段过程。" />
   </a>
-  <figcaption>图 2　dispatch lock 保护“检查运行条件到提交转换”的窗口。锁释放后，新请求仍需遵守实体当前状态；等待取得锁不代表一定允许生成。</figcaption>
+  <figcaption>图 2　dispatch lock 保护“检查运行条件到提交转换”的窗口。锁释放后，新请求仍需遵守实体当前状态；等待取得锁不代表一定允许生成。点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 这里有两种保护，负责不同的事情：
@@ -178,7 +178,7 @@ restoreAgent(agentId: string) {
   <a href="/media/blog/cherry-studio-trash/atomicity.svg" aria-label="查看数据库事务与提交后恢复边界原图">
     <img src="/media/blog/cherry-studio-trash/atomicity.svg" width="752" height="1056" loading="lazy" decoding="async" alt="生命周期命令先取得锁并检查条件，在同步数据库事务中修改实体、选中的关联对象和调度；提交前异常回滚，提交后再按命令执行资源同步或清理，失败时保留已提交状态并通过重试或对账修复。" />
   </a>
-  <figcaption>图 3　数据库提交是边界。图中归纳了不同命令的后续工作，不表示每个命令都会执行所有资源操作，也不表示它们共享一个跨资源事务。</figcaption>
+  <figcaption>图 3　数据库提交是边界。图中归纳了不同命令的后续工作，不表示每个命令都会执行所有资源操作，也不表示它们共享一个跨资源事务。点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 ### 原子性、隔离性和持久性回答不同问题

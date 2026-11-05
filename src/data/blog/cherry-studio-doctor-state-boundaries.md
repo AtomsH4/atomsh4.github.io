@@ -55,7 +55,7 @@ const viewModel = useMemo(
   <a href="/media/blog/cherry-studio-doctor/state-ownership.svg" aria-label="查看 Doctor 状态归属原图">
     <img src="/media/blog/cherry-studio-doctor/state-ownership.svg" width="848" height="1168" loading="lazy" decoding="async" alt="Doctor 状态归属示意：前端 Controller 经 IPC 发出命令，后端通过 doctor.state 发布检查事实，再派生为 ViewModel；前端 Session 单独管理面板、草稿、授权和交互状态，两类数据共同驱动界面。修复返回成功不会由前端直接改写报告，AI 诊断不计入 Doctor 报告统计。" />
   </a>
-  <figcaption>图 1　Doctor 的主要状态依赖，而非完整调用时序。控制器读取共享状态并构建视图模型，同时管理会话交互；操作提示与后端检查事实分开更新。依据本文固定的合并版本绘制，点击可查看原图。</figcaption>
+  <figcaption>图 1　Doctor 的主要状态依赖，而非完整调用时序。控制器读取共享状态并构建视图模型，同时管理会话交互；操作提示与后端检查事实分开更新。依据本文固定的合并版本绘制，点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 例如，完成状态下的列表按照后端 catalog 匹配实际返回的结果；运行状态下可以展示等待中的检查项，但不会为尚未返回的结果编造修复动作。动作来自结果本身，并且过期报告的动作会被禁用。[结果投影与动作来源](https://github.com/CherryHQ/cherry-studio/blob/b59f007d93e11f35f2f0cd00c1ead27f06a213b4/src/renderer/utils/doctor/doctorViewModel.ts#L57-L107)

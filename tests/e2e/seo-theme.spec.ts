@@ -111,20 +111,18 @@ const assertReadableButton = async (button: Locator) => {
 };
 
 for (const colorScheme of ['light', 'dark'] as const) {
-  test(`主按钮在${colorScheme}主题及交互状态下可读`, async ({ page }) => {
+  test(`404 页面主按钮在${colorScheme}主题及交互状态下可读`, async ({ page }) => {
     await page.emulateMedia({ colorScheme });
-    for (const pathname of ['/', '/404.html']) {
-      await page.goto(pathname);
-      const button = page.locator('.button-primary');
-      await assertReadableButton(button);
-      await button.hover();
-      await assertReadableButton(button);
-      await page.mouse.move(0, 0);
-      await page.keyboard.press('Tab');
-      await button.focus();
-      await expect(button).toBeFocused();
-      expect(await button.evaluate(element => element.matches(':focus-visible'))).toBe(true);
-      await assertReadableButton(button);
-    }
+    await page.goto('/404.html');
+    const button = page.locator('.button-primary');
+    await assertReadableButton(button);
+    await button.hover();
+    await assertReadableButton(button);
+    await page.mouse.move(0, 0);
+    await page.keyboard.press('Tab');
+    await button.focus();
+    await expect(button).toBeFocused();
+    expect(await button.evaluate(element => element.matches(':focus-visible'))).toBe(true);
+    await assertReadableButton(button);
   });
 }

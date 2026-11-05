@@ -1,0 +1,47 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SeoHead, { type Props } from '../components/SeoHead.astro';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head><SeoHead {...Astro.props} /></head>
+  <body class="graph-page">
+    <SiteHeader />
+    <main><slot /></main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  :global(html:has(.graph-page)) { background: #131b2b; color-scheme: dark; }
+  :global(body.graph-page) {
+    --color-page: #131b2b;
+    --color-text: #e8eaf4;
+    --color-muted: #a6afc5;
+    --color-accent: #c3b6e8;
+    --color-accent-deep: #e8e5f3;
+    --color-surface: rgb(34 44 62 / 72%);
+    --color-border: rgb(195 184 224 / 15%);
+    --color-rule: rgb(190 180 225 / 12%);
+    --color-nav-active: rgb(204 194 236 / 10%);
+    --color-menu: #1e283b;
+    min-width: 0;
+    min-height: 100svh;
+    height: 100dvh;
+    grid-template-rows: auto minmax(420px, 1fr) auto;
+    background: #131b2b;
+  }
+  :global(.graph-page .site-header) { margin-block: 16px; }
+  :global(.graph-page main) { width: 100%; min-height: 0; margin: 0; }
+  :global(.graph-page main > astro-island) { display: block; width: 100%; height: 100%; }
+  :global(.graph-page .site-footer) { margin-block: 0; padding-block: 14px; }
+  :global(.graph-page astro-dev-toolbar) { display: none; }
+  @media (max-width: 899px) {
+    :global(body.graph-page) { grid-template-rows: auto minmax(560px, 1fr) auto; }
+    :global(.graph-page .site-header) { margin-block: 12px; }
+    :global(.graph-page .site-footer) { padding-block: 12px; font-size: 0.75rem; }
+  }
+</style>

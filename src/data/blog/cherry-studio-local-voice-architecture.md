@@ -19,7 +19,7 @@ draft: false
   <a href="/media/blog/cherry-studio-voice/architecture.svg" aria-label="查看 Cherry Studio 本地 ASR 与 TTS 功能架构原图">
     <img src="/media/blog/cherry-studio-voice/architecture.svg" width="950" height="690" loading="lazy" decoding="async" alt="本地语音架构：听写和朗读从产品入口进入共享 Renderer 语音服务，经类型化 IPC 到 Main 进程的单会话服务，再分别调用 Apple 或 FunASR 识别、Apple 或 Windows 系统语音合成；识别文本回到原输入目标，WAV 临时文件回到 Renderer 播放。" />
   </a>
-  <figcaption>图 1　本地 ASR/TTS 的职责与数据流。图中的 PR 编号只标明模块最初的实现来源，不是运行时模块边界；下文按系统本身组织，点击可查看原图。</figcaption>
+  <figcaption>图 1　本地 ASR/TTS 的职责与数据流。图中的 PR 编号只标明模块最初的实现来源，不是运行时模块边界；下文按系统本身组织，点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 ## 设计目标与边界

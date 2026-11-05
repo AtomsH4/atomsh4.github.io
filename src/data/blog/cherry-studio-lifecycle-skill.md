@@ -13,7 +13,7 @@ draft: false
 
 > **项目仓库：[AtomsH4 / cherry-studio-skills](https://github.com/AtomsH4/cherry-studio-skills)**
 >
-> Skill 原文、分析规范和评估场景都在这个公开仓库中。下文两张配图根据仓库规则整理，点击图片可查看原图。
+> Skill 原文、分析规范和评估场景都在这个公开仓库中。下文两张配图根据仓库规则整理，点击图片可放大查看，再次点击图片关闭。
 
 给一个主进程能力起名为 `SomethingService`，并不能回答它是否需要接入生命周期系统。一次调用结束后，有没有资源继续存在？谁负责关闭它？初始化只成功了一半怎么办？这些问题比类名更能决定设计。
 
@@ -50,7 +50,7 @@ draft: false
   <a href="/media/blog/cherry-studio-lifecycle/decision.svg" aria-label="查看图一原图：Lifecycle 资源归属判定流程">
     <img src="/media/blog/cherry-studio-lifecycle/decision.svg" width="816" height="1104" loading="lazy" decoding="async" alt="Lifecycle 判定流程：关键事实不足时先补充证据；没有跨调用资源或持续性全局副作用时无需新增服务；存在资源时依次比较函数、单例和现有 owner，只有更小方案均无法正确承担归属时才需要独立生命周期服务。" />
   </a>
-  <figcaption>图 1　是否需要新增 Lifecycle 服务，先由证据和资源归属决定。根据仓库分析规范绘制，点击可查看原图。</figcaption>
+  <figcaption>图 1　是否需要新增 Lifecycle 服务，先由证据和资源归属决定。根据仓库分析规范绘制，点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 图 1 要从顶部读起：先确认关键事实，再判断是否存在需要持续管理的资源或副作用，最后比较更小的方案。右侧两个蓝色出口说明，“没有跨调用资源”和“已有合适的 owner”都可能支持不新增 Lifecycle 服务，但理由不同。
@@ -83,7 +83,7 @@ draft: false
   <a href="/media/blog/cherry-studio-lifecycle/transitions.svg" aria-label="查看图二原图：条件加载、启停与暂停的区别">
     <img src="/media/blog/cherry-studio-lifecycle/transitions.svg" width="808" height="1136" loading="lazy" decoding="async" alt="三种生命周期能力对比：Conditional 在启动时按固定条件纳入或排除整个服务；Activatable 在服务和控制 IPC 常驻时反复获取或释放资源；Pausable 在保留实例和资源的前提下暂停与恢复工作，备份场景还要求停止接收并排空在途任务。" />
   </a>
-  <figcaption>图 2　三种能力分别改变服务的存在、资源的持有和工作的执行。下方的暂停流程采用仓库备份场景的排空约定，点击可查看原图。</figcaption>
+  <figcaption>图 2　三种能力分别改变服务的存在、资源的持有和工作的执行。下方的暂停流程采用仓库备份场景的排空约定，点击图片可放大查看，再次点击图片关闭。</figcaption>
 </figure>
 
 图 2 的三行回答不同的问题：第一行在应用组成时做一次选择；第二行可以反复获取和释放资源；第三行在资源保留的情况下暂停和恢复工作。它们表达的是不同能力，不能因为都有“开关”的感觉，就互相替换，也不应把它们理解成互斥的服务分类。

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import PageHero from '../../components/PageHero.astro';
+import BlogImageLightbox from '../../components/BlogImageLightbox.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedEntries } from '../../lib/content';
 import '../../components/ReadOnlyTable/ReadOnlyTable.css';
@@ -32,4 +33,5 @@ const { Content } = await render(entry);
   <article class="prose reading-article blog-article">
     <Content />
   </article>
+  <BlogImageLightbox />
 </BaseLayout>
