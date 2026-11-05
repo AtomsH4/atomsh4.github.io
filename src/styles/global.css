@@ -590,11 +590,6 @@ main:has(> .page-hero:not(.glass-surface)) {
   border-color: var(--color-accent);
 }
 
-.entry-card--note:focus-within {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-}
-
 @media (hover: hover) and (pointer: fine) {
   .entry-card:not(.entry-card--note):hover {
     transform: translateY(-2px);
