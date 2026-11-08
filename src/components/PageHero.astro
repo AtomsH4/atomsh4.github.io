@@ -11,5 +11,29 @@ const { eyebrow, title, description } = Astro.props;
 <header class="page-hero">
   <p>{eyebrow}</p>
   <h1>{title}</h1>
-  {description && <p>{description}</p>}
+  {description && <p class="page-hero-description">{description}</p>}
 </header>
+
+<style>
+  :global(main:has(> .blog-article)) .page-hero-description {
+    padding: var(--space-4) clamp(1rem, 2.5vw, 1.5rem);
+    border-inline-start: 2px solid color-mix(in srgb, var(--color-accent) 65%, transparent);
+    border-radius: 0 var(--space-3) var(--space-3) 0;
+    background: color-mix(in srgb, var(--color-accent) 5%, var(--color-page));
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+  }
+
+  :global(main:has(> .blog-article)) .page-hero-description::before {
+    display: block;
+    margin-block-end: var(--space-2);
+    color: var(--color-accent-deep);
+    font-size: 0.75rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    content: '摘要';
+  }
+</style>
