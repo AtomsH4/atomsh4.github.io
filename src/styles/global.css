@@ -16,6 +16,8 @@
   --color-border: rgb(255 255 255 / 82%);
   --color-nav-active: rgb(255 255 255 / 64%);
   --color-card: rgb(255 255 255 / 84%);
+  --color-reading-surface: rgb(255 255 255 / 56%);
+  --color-reading-muted: #545970;
   --color-card-featured: #fafaff;
   --color-card-border: rgb(78 74 125 / 11%);
   --color-rule: rgb(78 74 125 / 14%);
@@ -541,6 +543,26 @@ main:has(> .page-hero:not(.glass-surface)) {
   border-block: 1px solid var(--color-rule);
 }
 
+main > :is(.entry-grid--blog, .entry-grid--notes) {
+  --color-card: var(--color-reading-surface);
+  --color-muted: var(--color-reading-muted);
+}
+
+main > .entry-grid--notes {
+  padding-inline: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--color-reading-surface);
+}
+
+main > .entry-grid--blog > .entry-card,
+main > .entry-grid--notes {
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
 .entry-card--note {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 13rem;
@@ -677,6 +699,8 @@ main:has(> .page-hero:not(.glass-surface)) {
     --color-border: rgb(217 214 255 / 24%);
     --color-nav-active: rgb(255 255 255 / 12%);
     --color-card: rgb(36 39 60 / 96%);
+    --color-reading-surface: rgb(31 33 53 / 62%);
+    --color-reading-muted: #c7c8da;
     --color-card-featured: #282940;
     --color-card-border: rgb(217 214 255 / 13%);
     --color-rule: rgb(217 214 255 / 15%);

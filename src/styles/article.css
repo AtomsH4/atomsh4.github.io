@@ -2,9 +2,49 @@ body:has(.reading-article) {
   --page-gutter: clamp(1.25rem, 3.125vw, 2rem);
 }
 
+main:has(> .reading-article) {
+  --reading-inset: var(--page-gutter);
+  --reading-fade: clamp(10rem, 24vh, 20rem);
+  --color-muted: var(--color-reading-muted);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding: clamp(1rem, 2vw, 1.5rem) var(--reading-inset);
+}
+
+body:has(.reading-article) > main:has(> .page-hero) {
+  margin-block: var(--space-2);
+}
+
+body:has(.reading-article) > .site-footer {
+  margin-block-start: var(--space-2);
+}
+
+/* Fade the surface independently of the content and focus rings. */
+main:has(> .reading-article)::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: var(--color-reading-surface);
+  mask-image: linear-gradient(
+    transparent,
+    #000 var(--reading-fade),
+    #000 calc(100% - var(--reading-fade)),
+    transparent
+  );
+  pointer-events: none;
+  content: '';
+}
+
 main:has(> .reading-article) > .page-hero {
   max-width: var(--content-prose);
   margin-inline: auto;
+}
+
+main:has(> .reading-article) > .page-hero > p:first-child {
+  color: color-mix(in srgb, var(--color-accent) 85%, var(--color-text));
 }
 
 main:has(> .reading-article) > .page-hero h1 {

@@ -9,7 +9,7 @@ const articlePaths = [
 
 for (const width of [390, 1440]) {
   for (const path of articlePaths) {
-    test(`文章阅读布局居中且标题克制：${width} ${path}`, async ({ page }) => {
+    test(`背景覆盖全宽且内容保持原有阅读宽度：${width} ${path}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);
       const metrics = await page.evaluate(() => {
@@ -19,6 +19,7 @@ for (const width of [390, 1440]) {
         const bodyBox = article.querySelector(':scope > p')!.getBoundingClientRect();
         const articleBox = article.getBoundingClientRect();
         const heroBox = hero.getBoundingClientRect();
+        const mainBox = article.closest('main')!.getBoundingClientRect();
         const titleStyle = getComputedStyle(title);
         return {
           bodyWidth: bodyBox.width,
@@ -27,6 +28,8 @@ for (const width of [390, 1440]) {
           bodyX: bodyBox.x,
           articleWidth: articleBox.width,
           articleCenter: articleBox.x + articleBox.width / 2,
+          mainX: mainBox.x,
+          mainWidth: mainBox.width,
           media: [...article.querySelectorAll(':scope > figure')].map(element => {
             const box = element.getBoundingClientRect();
             return { width: box.width, center: box.x + box.width / 2 };
@@ -48,6 +51,8 @@ for (const width of [390, 1440]) {
       expect(metrics.fontSize).toBeLessThanOrEqual(width < 600 ? 32 : 44);
       expect(metrics.lineHeight / metrics.fontSize).toBeGreaterThanOrEqual(1.2);
       expect(metrics.bodyWidth).toBe(width === 1440 ? 864 : 350);
+      expect(metrics.mainX).toBe(0);
+      expect(metrics.mainWidth).toBe(metrics.viewportWidth);
       expect(metrics.articleWidth).toBe(metrics.bodyWidth);
       expect(Math.abs(metrics.articleCenter - metrics.viewportWidth / 2)).toBeLessThanOrEqual(1);
       expect(Math.abs(metrics.bodyCenter - metrics.viewportWidth / 2)).toBeLessThanOrEqual(1);
