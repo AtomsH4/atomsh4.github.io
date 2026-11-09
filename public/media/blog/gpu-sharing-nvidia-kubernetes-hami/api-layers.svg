@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="840" viewBox="0 0 960 840" role="img" aria-labelledby="title desc">
+<title id="title">NVIDIA API：谁负责看，谁负责做</title><desc id="desc">左侧为节点监控通过 NVML 查询设备，右侧为容器计算经 CUDA Runtime、HAMi-Core 和 CUDA Driver API 到达 NVIDIA 驱动与 GPU。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L9 4.5 L0 9 Z" fill="#64748b"/></marker></defs>
+<rect width="960" height="100%" rx="20" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif">
+<text x="40" y="52" font-size="29" fill="#17243b" font-weight="700" text-anchor="start">NVIDIA API：谁负责看，谁负责做</text>
+<text x="40" y="88" font-size="22" fill="#42556e" font-weight="400" text-anchor="start">管理查询与计算提交是两条不同的路径。</text>
+<text x="40" y="136" font-size="23" fill="#0f766e" font-weight="650" text-anchor="start">节点侧：发现与管理</text>
+<text x="530" y="136" font-size="23" fill="#1d4ed8" font-weight="650" text-anchor="start">容器侧：常见计算路径</text>
+<rect x="40" y="160" width="390" height="90" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.5"/>
+<text x="235.0" y="195" font-size="23" fill="#0f766e" font-weight="650" text-anchor="middle">监控 / Device Plugin</text>
+<text x="235.0" y="226" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">发现 GPU，读取设备状态</text>
+<rect x="40" y="420" width="390" height="90" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.5"/>
+<text x="235.0" y="455" font-size="23" fill="#0f766e" font-weight="650" text-anchor="middle">NVML / libnvidia-ml.so</text>
+<text x="235.0" y="486" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">nvmlDeviceGetMemoryInfo 等</text>
+<path d="M235 250 L235 416" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<text x="254" y="341" font-size="21" fill="#0f766e" font-weight="400" text-anchor="start">查询 / 管理</text>
+<rect x="530" y="160" width="390" height="90" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<text x="725.0" y="195" font-size="23" fill="#1d4ed8" font-weight="650" text-anchor="middle">PyTorch / CUDA 应用</text>
+<text x="725.0" y="226" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">模型计算、显存申请</text>
+<rect x="530" y="290" width="390" height="90" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<text x="725.0" y="325" font-size="23" fill="#1d4ed8" font-weight="650" text-anchor="middle">CUDA Runtime</text>
+<text x="725.0" y="356" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">cudaMalloc 等常见入口</text>
+<rect x="530" y="420" width="390" height="90" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+<text x="725.0" y="455" font-size="23" fill="#b45309" font-weight="650" text-anchor="middle">HAMi-Core / libvgpu.so</text>
+<text x="725.0" y="486" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">配额检查、记账、提交限速</text>
+<rect x="530" y="550" width="390" height="90" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<text x="725.0" y="585" font-size="23" fill="#1d4ed8" font-weight="650" text-anchor="middle">CUDA Driver API</text>
+<text x="725.0" y="616" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">cuMemAlloc / cuLaunchKernel</text>
+<path d="M725 250 L725 286" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M725 380 L725 416" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M725 510 L725 546" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M235 510 L235 696" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M725 640 L725 696" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="40" y="700" width="880" height="100" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.5"/>
+<text x="480.0" y="735" font-size="23" fill="#0f766e" font-weight="650" text-anchor="middle">NVIDIA 驱动与物理 GPU</text>
+<text x="480.0" y="766" font-size="19" fill="#42556e" font-weight="400" text-anchor="middle">真正分配显存，并安排硬件执行</text>
+</g>
+</svg>

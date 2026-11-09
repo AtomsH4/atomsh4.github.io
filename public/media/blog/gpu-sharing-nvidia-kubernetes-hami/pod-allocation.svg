@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="870" viewBox="0 0 960 870" role="img" aria-labelledby="title desc">
+<title id="title">一个 Pod 如何拿到共享 GPU</title><desc id="desc">从 Webhook 识别申请，到 Filter 选卡预占、Pod 注解记录、Bind 绑定、Allocate 注入，最后由 HAMi-Core 执行 CUDA 配额检查。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L9 4.5 L0 9 Z" fill="#64748b"/></marker></defs>
+<rect width="960" height="100%" rx="20" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif">
+<text x="40" y="52" font-size="29" fill="#17243b" font-weight="700" text-anchor="start">一个 Pod 如何拿到共享 GPU</text>
+<text x="40" y="88" font-size="22" fill="#42556e" font-weight="400" text-anchor="start">调度决定分配结果，运行时负责执行额度。</text>
+<rect x="40" y="130" width="565" height="78" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<circle cx="76" cy="169" r="20" fill="#1d4ed8"/>
+<text x="76" y="177" font-size="23" fill="#ffffff" font-weight="650" text-anchor="middle">1</text>
+<text x="115" y="161" font-size="24" fill="#1d4ed8" font-weight="650" text-anchor="start">Webhook</text>
+<text x="115" y="191" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">识别资源申请，设置 schedulerName</text>
+<path d="M322 208 L322 236" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="40" y="240" width="565" height="78" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<circle cx="76" cy="279" r="20" fill="#1d4ed8"/>
+<text x="76" y="287" font-size="23" fill="#ffffff" font-weight="650" text-anchor="middle">2</text>
+<text x="115" y="271" font-size="24" fill="#1d4ed8" font-weight="650" text-anchor="start">Filter</text>
+<text x="115" y="301" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">选择节点和 GPU，预占配额</text>
+<path d="M322 318 L322 346" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="40" y="350" width="565" height="78" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<circle cx="76" cy="389" r="20" fill="#1d4ed8"/>
+<text x="76" y="397" font-size="23" fill="#ffffff" font-weight="650" text-anchor="middle">3</text>
+<text x="115" y="381" font-size="24" fill="#1d4ed8" font-weight="650" text-anchor="start">Pod 注解</text>
+<text x="115" y="411" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">记录 UUID、显存和算力额度</text>
+<path d="M322 428 L322 456" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="40" y="460" width="565" height="78" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<circle cx="76" cy="499" r="20" fill="#1d4ed8"/>
+<text x="76" y="507" font-size="23" fill="#ffffff" font-weight="650" text-anchor="middle">4</text>
+<text x="115" y="491" font-size="24" fill="#1d4ed8" font-weight="650" text-anchor="start">Bind</text>
+<text x="115" y="521" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">获取节点锁，将 Pod 绑定到节点</text>
+<path d="M322 538 L322 566" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="40" y="570" width="565" height="78" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+<circle cx="76" cy="609" r="20" fill="#1d4ed8"/>
+<text x="76" y="617" font-size="23" fill="#ffffff" font-weight="650" text-anchor="middle">5</text>
+<text x="115" y="601" font-size="24" fill="#1d4ed8" font-weight="650" text-anchor="start">Device Plugin · Allocate</text>
+<text x="115" y="631" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">注入设备、限制参数和 libvgpu.so</text>
+<path d="M322 648 L322 676" fill="none" stroke="#64748b" stroke-width="2.4" marker-end="url(#arrow)"/>
+<rect x="40" y="680" width="565" height="78" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+<circle cx="76" cy="719" r="20" fill="#b45309"/>
+<text x="76" y="727" font-size="23" fill="#ffffff" font-weight="650" text-anchor="middle">6</text>
+<text x="115" y="711" font-size="24" fill="#b45309" font-weight="650" text-anchor="start">HAMi-Core</text>
+<text x="115" y="741" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">拦截 CUDA 调用，检查额度或限速</text>
+<rect x="650" y="240" width="270" height="190" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.5"/>
+<text x="674" y="279" font-size="24" fill="#0f766e" font-weight="650" text-anchor="start">调度账本</text>
+<text x="674" y="317" font-size="22" fill="#42556e" font-weight="400" text-anchor="start">名额剩余够不够</text>
+<text x="674" y="350" font-size="22" fill="#42556e" font-weight="400" text-anchor="start">显存额度够不够</text>
+<text x="674" y="383" font-size="22" fill="#42556e" font-weight="400" text-anchor="start">算力预算够不够</text>
+<rect x="650" y="570" width="270" height="188" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+<text x="674" y="609" font-size="24" fill="#b45309" font-weight="650" text-anchor="start">容器内执行</text>
+<text x="674" y="648" font-size="20" fill="#42556e" font-weight="400" text-anchor="start">显存：累计额度检查</text>
+<text x="674" y="680" font-size="20" fill="#42556e" font-weight="400" text-anchor="start">计算：提交前限速</text>
+<text x="674" y="712" font-size="20" fill="#42556e" font-weight="400" text-anchor="start">NVML：利用率反馈</text>
+<text x="40" y="809" font-size="22" fill="#0f766e" font-weight="600" text-anchor="start">失败或结束 → 释放记账 / 回收分配</text>
+<text x="40" y="844" font-size="21" fill="#42556e" font-weight="400" text-anchor="start">调度器重启 → 依据已有 Pod 注解恢复账本</text>
+</g>
+</svg>
