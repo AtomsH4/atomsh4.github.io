@@ -18,13 +18,13 @@ Files: `src/content.config.ts`, `src/lib/content.ts`,
 `src/lib/content.test.ts`, `src/pages/index.astro`,
 `src/pages/projects/index.astro`.
 
-- [ ] Add the optional project schema field:
+- [x] Add the optional project schema field:
 
 ```ts
 order: z.number().int().nonnegative().optional(),
 ```
 
-- [ ] Export the project helper and switch both project lists to it:
+- [x] Export the project helper and switch both project lists to it:
 
 ```ts
 export type ProjectEntry = DatedEntry & { data: { order?: number } };
@@ -37,7 +37,7 @@ export const getPublishedProjects = <T extends ProjectEntry>(entries: T[]): T[] 
   );
 ```
 
-- [ ] Verify that ordered entries precede newer unordered entries, drafts stay
+- [x] Verify that ordered entries precede newer unordered entries, drafts stay
   hidden, date order breaks equal/missing priorities, and input order is preserved.
   Run `npm test -- src/lib/content.test.ts src/content.config.test.ts`.
 
@@ -45,21 +45,29 @@ export const getPublishedProjects = <T extends ProjectEntry>(entries: T[]): T[] 
 
 Files: all nine entries under `src/data/projects/`.
 
-- [ ] Update the four existing summaries and matching bodies using the confirmed
+- [x] Update the four existing summaries and matching bodies using the confirmed
   copy. Keep `own`, `member`, and `fork` roles unchanged.
-- [ ] Add `adaptive-ai-gateway.md`, `qt-device-workbench.md`, `thesisctl.md`,
+- [x] Add `adaptive-ai-gateway.md`, `qt-device-workbench.md`, `thesisctl.md`,
   `cherry-studio-skills.md`, and `s2scr-data.md` with public repository links,
   descriptions, dates, tags, `kind: own`, and `draft: false`.
-- [ ] Set Cherry Studio's order to 0, gateway to 1, workbench to 2, and Rust
+- [x] Set Cherry Studio's order to 0, gateway to 1, workbench to 2, and Rust
   frontend-tools to 3. Only these four entries have `featured: true`.
 
 ## Task 3: Browser and build verification
 
 File: `tests/e2e/site.spec.ts`.
 
-- [ ] Update homepage expectations to the approved four-card order.
-- [ ] Verify the projects page has nine cards, Cherry Studio is first, its
+- [x] Update homepage expectations to the approved four-card order.
+- [x] Verify the projects page has nine cards, Cherry Studio is first, its
   description names the delivered features, and its official link is retained.
-- [ ] Run `npm run build` and the affected Playwright cases in `site.spec.ts`.
-- [ ] Inspect the project sections at desktop and mobile widths for overflow
+- [x] Run `npm run build` and the affected Playwright cases in `site.spec.ts`.
+- [x] Inspect the project sections at desktop and mobile widths for overflow
   and ordering. Confirm `git diff --check` is clean.
+
+## Verification results
+
+- 20 relevant Vitest tests passed.
+- Production build completed successfully.
+- Both affected Playwright browser tests passed.
+- Desktop (1440 × 1000) and mobile (390 × 844) inspections confirmed the four selected projects, all nine project entries, Cherry Studio first, and no horizontal overflow or browser page errors.
+- `git diff --check` passed.

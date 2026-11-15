@@ -3,9 +3,9 @@ import { getCollection } from 'astro:content';
 import EntryList from '../../components/EntryList.astro';
 import PageHero from '../../components/PageHero.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedEntries } from '../../lib/content';
+import { getPublishedProjects } from '../../lib/content';
 
-const entries = getPublishedEntries(await getCollection('projects'));
+const entries = getPublishedProjects(await getCollection('projects'));
 ---
 
 <BaseLayout title="项目 | AtomsH4" description="收录 AtomsH4 正在实践、维护或学习中的公开项目，涵盖 AI 应用、前端工具与完整应用开发。">

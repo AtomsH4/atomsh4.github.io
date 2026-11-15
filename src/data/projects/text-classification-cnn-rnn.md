@@ -1,6 +1,6 @@
 ---
 title: text-classification-cnn-rnn
-summary: CNN-RNN 中文文本分类，基于 TensorFlow 的 AI 学习轨迹。
+summary: Fork 自 gaussic 的中文文本分类项目，基于 TensorFlow，包含字符级 CNN、RNN 模型及数据预处理、训练和评估流程。
 pubDate: 2026-08-31
 tags:
   - CNN-RNN
@@ -13,4 +13,4 @@ repository: https://github.com/AtomsH4/text-classification-cnn-rnn
 kind: fork
 ---
 
-CNN-RNN 中文文本分类，基于 TensorFlow 的 AI 学习轨迹。
+Fork 自 gaussic 的中文文本分类项目，基于 TensorFlow，包含字符级 CNN、RNN 模型及数据预处理、训练和评估流程。

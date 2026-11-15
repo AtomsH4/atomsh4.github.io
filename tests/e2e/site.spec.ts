@@ -36,16 +36,28 @@ test('首页以博客与精选项目为主要入口', async ({ page }) => {
   await expect(
     page.getByRole('heading', { name: /Atoms-H Blog|AtomsH4 Profile/ }),
   ).toHaveCount(0);
-  await expect(
-    page.getByRole('heading', { name: 'frontend-tools', exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole('heading', { name: 'CourseSelectionSystem', exact: true }),
-  ).toBeVisible();
+  await expect(page.locator('.entry-grid--projects .entry-title')).toHaveText([
+    'Cherry Studio',
+    'adaptive-ai-gateway',
+    'qt-device-workbench',
+    'frontend-tools',
+  ]);
 });
 
 test('项目卡展示 Cherry Studio 成员身份并链接官方仓库', async ({ page }) => {
   await page.goto('/projects/');
+
+  await expect(page.locator('.entry-grid--projects .entry-title')).toHaveText([
+    'Cherry Studio',
+    'adaptive-ai-gateway',
+    'qt-device-workbench',
+    'frontend-tools',
+    'thesisctl',
+    'S2SCR-data',
+    'cherry-studio-skills',
+    'CourseSelectionSystem',
+    'text-classification-cnn-rnn',
+  ]);
 
   const card = page
     .locator('.entry-card')
@@ -53,7 +65,7 @@ test('项目卡展示 Cherry Studio 成员身份并链接官方仓库', async ({
   const repositoryLink = card.locator('a.entry-repository');
 
   await expect(card.locator('.entry-kind')).toHaveText('member');
-  await expect(card).toContainText('作为项目成员参与 Cherry Studio 开源协作');
+  await expect(card).toContainText('笔记打印与 PDF 导出、System Doctor 系统诊断界面');
   await expect(card).not.toContainText('学习仓库');
   await expect(card).not.toContainText('fork');
   await expect(repositoryLink).toHaveAttribute(
