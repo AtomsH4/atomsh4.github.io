@@ -9,8 +9,8 @@ featured: true
 draft: false
 cover:
   kind: remote
-  src: "https://coverartarchive.org/release-group/b2518ad1-3d54-4a8a-badb-959893da24d0/front-1200"
-  sourceUrl: "https://musicbrainz.org/release-group/b2518ad1-3d54-4a8a-badb-959893da24d0"
-  provider: cover-art-archive
-  credit: "Cover Art Archive / MusicBrainz contributors"
+  src: "https://p2.music.126.net/Rhm3ri2G5IUnQdXJuPY7fw==/109951167091309142.jpg"
+  sourceUrl: "https://music.163.com/album?id=135905816"
+  provider: netease
+  credit: "网易云音乐 / Silk Sonic《An Evening With Silk Sonic》封面"
 ---

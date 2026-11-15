@@ -1,11 +1,13 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 
-import { getGeneratedCoverPalette } from './create-cover-texture';
+import { getGeneratedCoverPalette } from './cover-artwork';
 import type { RecommendationItem } from './recommendation-types';
 import styles from './RecommendationExperience.module.css';
 
 export type RecommendationCoverProps = {
   item: RecommendationItem;
+  onImageLoad?: (image: HTMLImageElement) => void;
+  onImageError?: () => void;
 };
 
 const GeneratedCover = ({ item }: RecommendationCoverProps) => {
@@ -29,13 +31,23 @@ const GeneratedCover = ({ item }: RecommendationCoverProps) => {
   );
 };
 
-export const RecommendationCover = ({ item }: RecommendationCoverProps) => {
+export const RecommendationCover = ({
+  item,
+  onImageLoad,
+  onImageError,
+}: RecommendationCoverProps) => {
   const [imageFailed, setImageFailed] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
   const imageSource = item.cover.kind === 'generated' ? null : item.cover.src;
 
   useEffect(() => {
     setImageFailed(false);
   }, [item.id, imageSource]);
+
+  useEffect(() => {
+    const image = imageRef.current;
+    if (image?.complete && image.naturalWidth > 0) onImageLoad?.(image);
+  }, [imageFailed, imageSource, onImageLoad]);
 
   if (!imageSource || imageFailed) {
     return <GeneratedCover item={item} />;
@@ -43,10 +55,18 @@ export const RecommendationCover = ({ item }: RecommendationCoverProps) => {
 
   return (
     <img
+      ref={imageRef}
       className={styles.licensedCover}
       src={imageSource}
+      style={{ backgroundColor: getGeneratedCoverPalette(item.id).background }}
       alt={`${item.title} 封面`}
-      onError={() => setImageFailed(true)}
+      crossOrigin={onImageLoad ? 'anonymous' : undefined}
+      draggable={false}
+      onLoad={(event) => onImageLoad?.(event.currentTarget)}
+      onError={() => {
+        setImageFailed(true);
+        onImageError?.();
+      }}
     />
   );
 };

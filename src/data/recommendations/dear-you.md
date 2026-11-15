@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://i.ytimg.com/vi/kDPgu6Hxgaw/maxresdefault.jpg"
-  sourceUrl: "https://www.youtube.com/watch?v=kDPgu6Hxgaw"
-  provider: youtube
-  credit: "CMC Pictures official trailer / YouTube"
+  src: "https://media.themoviedb.org/t/p/w780/s0sC3hPPX4OobLNfdl2iSs2vtvI.jpg"
+  sourceUrl: "https://www.themoviedb.org/movie/1671548"
+  provider: tmdb
+  credit: "TMDB /《给阿嬷的情书》海报"
 ---

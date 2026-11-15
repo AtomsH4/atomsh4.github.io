@@ -175,9 +175,9 @@ test('推荐页提供分类、首批内容和安全外链', async ({ page }) => 
     page.getByRole('heading', { name: 'Back in Black', level: 2 }),
   ).toBeVisible();
   const sourceLink = page.locator(
-    'a[href="https://musicbrainz.org/release-group/d3bc1a64-7561-3787-b680-0003aa50f8f1"]',
+    'a[href="https://commons.wikimedia.org/wiki/File:ACDC_Back_in_Black.png"]',
   );
-  await expect(sourceLink).toContainText('Cover Art Archive');
+  await expect(sourceLink).toContainText('Wikimedia Commons');
   await expect(sourceLink).toContainText('在新标签页打开');
   await expect(sourceLink).toHaveAttribute('target', '_blank');
   await expect(sourceLink).toHaveAttribute(
@@ -384,7 +384,7 @@ test('推荐页在 WebGL 不可用时保留可拖动 CSS 立体视图', async ({
     });
   });
   await page.route(
-    '**/standardebooks/w-somerset-maugham_the-moon-and-sixpence/**/cover.jpg',
+    '**/w-somerset-maugham_the-moon-and-sixpence@master/images/cover.jpg',
     (route) =>
       route.fulfill({
         contentType: 'image/svg+xml',

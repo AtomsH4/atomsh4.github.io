@@ -202,7 +202,7 @@ describe('useRecommendationTexture', () => {
     const { result, unmount } = renderHook(() =>
       useRecommendationTexture(item, bookFaceAspect),
     );
-    const request = pendingLoads[0];
+    const request = pendingLoads[1];
     Object.defineProperty(request.texture, 'image', {
       configurable: true,
       value: { width: 100, height: 150 },
@@ -233,7 +233,7 @@ describe('useRecommendationTexture', () => {
     const { result, unmount } = renderHook(() =>
       useRecommendationTexture(item),
     );
-    const licensedRequest = pendingLoads[0];
+    const licensedRequest = pendingLoads[1];
     const licensedDispose = vi.spyOn(licensedRequest.texture, 'dispose');
 
     expect(licensedRequest.url).toBe('/media/recommendations/cover.svg');
@@ -242,11 +242,11 @@ describe('useRecommendationTexture', () => {
 
     expect(licensedDispose).toHaveBeenCalledOnce();
     expect(pendingLoads).toHaveLength(2);
-    expect(pendingLoads[1].url).toMatch(/^data:image\/svg\+xml/);
+    expect(pendingLoads[0].url).toMatch(/^data:image\/svg\+xml/);
 
-    act(() => pendingLoads[1].onLoad?.(pendingLoads[1].texture));
+    act(() => pendingLoads[0].onLoad?.(pendingLoads[0].texture));
 
-    expect(result.current).toBe(pendingLoads[1].texture);
+    expect(result.current).toBe(pendingLoads[0].texture);
     expect(result.current?.colorSpace).toBe(THREE.SRGBColorSpace);
     unmount();
   });
@@ -263,22 +263,61 @@ describe('useRecommendationTexture', () => {
     const { result, unmount } = renderHook(() =>
       useRecommendationTexture(item, bookFaceAspect),
     );
-    const remoteRequest = pendingLoads[0];
+    const remoteRequest = pendingLoads[1];
 
     expect(remoteRequest.url).toBe(item.cover.kind === 'remote' ? item.cover.src : '');
 
     act(() => remoteRequest.onError?.(new Error('load failed')));
 
     expect(pendingLoads).toHaveLength(2);
-    expect(pendingLoads[1].url).toMatch(/^data:image\/svg\+xml/);
-    expect(decodeSvgDataUrl(pendingLoads[1].url)).toContain(
+    expect(pendingLoads[0].url).toMatch(/^data:image\/svg\+xml/);
+    expect(decodeSvgDataUrl(pendingLoads[0].url)).toContain(
       `height="${Math.round(1024 / bookFaceAspect)}"`,
     );
 
-    act(() => pendingLoads[1].onLoad?.(pendingLoads[1].texture));
+    act(() => pendingLoads[0].onLoad?.(pendingLoads[0].texture));
 
-    expect(result.current).toBe(pendingLoads[1].texture);
+    expect(result.current).toBe(pendingLoads[0].texture);
     expect(result.current?.colorSpace).toBe(THREE.SRGBColorSpace);
+    unmount();
+  });
+
+  it('shows local artwork while waiting for a remote cover', () => {
+    const item = createItem('slow-remote', {
+      kind: 'remote',
+      src: 'https://example.com/slow-cover.jpg',
+      sourceUrl: 'https://example.com/work',
+      provider: 'open-library',
+      credit: 'Cover repository',
+    });
+    const { result, unmount } = renderHook(() => useRecommendationTexture(item));
+    const [placeholder, original] = pendingLoads;
+    const disposePlaceholder = vi.spyOn(placeholder.texture, 'dispose');
+
+    act(() => placeholder.onLoad?.(placeholder.texture));
+    expect(result.current).toBe(placeholder.texture);
+
+    act(() => original.onLoad?.(original.texture));
+    expect(result.current).toBe(original.texture);
+    expect(disposePlaceholder).toHaveBeenCalledOnce();
+    unmount();
+  });
+
+  it('keeps the original when a placeholder finishes loading later', () => {
+    const item = createItem('fast-remote', {
+      kind: 'remote',
+      src: 'https://example.com/fast-cover.jpg',
+      sourceUrl: 'https://example.com/work',
+      provider: 'open-library',
+      credit: 'Cover repository',
+    });
+    const { result, unmount } = renderHook(() => useRecommendationTexture(item));
+    const [placeholder, original] = pendingLoads;
+
+    act(() => original.onLoad?.(original.texture));
+    act(() => placeholder.onLoad?.(placeholder.texture));
+
+    expect(result.current).toBe(original.texture);
     unmount();
   });
 

@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -14,7 +15,14 @@ import {
   type CanvasDragState,
 } from './canvas-drag';
 import styles from './RecommendationExperience.module.css';
+import { getGeneratedCoverPalette } from './cover-artwork';
+import {
+  getCoverEdgeTextColor,
+  sampleCoverEdge,
+  type CoverEdgeAppearance,
+} from './cover-edge-color';
 import { getRecommendationIdAtOffset } from './recommendation-navigation';
+import { getBookThickness } from './object-appearance';
 import {
   resolvePresentation,
   type RecommendationItem,
@@ -44,9 +52,24 @@ const PhysicalObject = ({
   const { consumeDraggedClick, rotation, pointerHandlers } =
     useDragRotation();
   const presentation = resolvePresentation(item.category, item.presentation);
+  const source = item.cover.kind === 'generated' ? item.id : item.cover.src;
+  const [sampledCover, setSampledCover] = useState<{
+    source: string;
+    edge: CoverEdgeAppearance;
+  } | null>(null);
+  const edge = sampledCover?.source === source ? sampledCover.edge : null;
+  const color = edge?.color ?? getGeneratedCoverPalette(item.id).background;
+  const handleCoverLoad = useCallback((image: HTMLImageElement) => {
+    const sampled = sampleCoverEdge(image);
+    setSampledCover(sampled ? { source, edge: sampled } : null);
+  }, [source]);
   const style = {
     '--rx': `${rotation.rotationX}deg`,
     '--ry': `${rotation.rotationY}deg`,
+    '--object-ink': color,
+    '--object-text': edge?.foreground ?? getCoverEdgeTextColor(color),
+    '--book-spine-background': edge?.background ?? color,
+    '--book-depth': `${getBookThickness(item.id) * 3}rem`,
   } as CSSProperties;
 
   return (
@@ -80,9 +103,15 @@ const PhysicalObject = ({
       ) : (
         <>
           <span className={styles.cssBookPages} aria-hidden="true" />
-          <span className={styles.cssBookSpine} aria-hidden="true" />
+          <span className={styles.cssBookSpine} aria-hidden="true">
+            {item.title}
+          </span>
           <span className={styles.cssFace}>
-            <RecommendationCover item={item} />
+            <RecommendationCover
+              item={item}
+              onImageLoad={handleCoverLoad}
+              onImageError={() => setSampledCover(null)}
+            />
           </span>
         </>
       )}

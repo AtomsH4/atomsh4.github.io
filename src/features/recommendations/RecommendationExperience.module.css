@@ -3,7 +3,7 @@
   --recommendation-paper-rgb: 250 247 240;
   --recommendation-accent-rgb: 196 79 50;
   --recommendation-accent-strong-rgb: 122 44 27;
-  --recommendation-glass-background: rgb(var(--recommendation-paper-rgb) / 58%);
+  --recommendation-glass-background: rgb(var(--recommendation-paper-rgb) / 38%);
 
   position: relative;
   overflow-x: clip;
@@ -17,6 +17,12 @@
 .experience:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: -2px;
+}
+
+.experience[data-mode='catalog'] {
+  --recommendation-credits-offset: clamp(2rem, 4vw, 3.5rem);
+
+  padding-bottom: var(--recommendation-credits-offset);
 }
 
 .topBar {
@@ -78,12 +84,12 @@
 .metadata {
   position: static;
   z-index: 4;
-  width: min(24rem, 32vw);
-  padding: 1rem 1.1rem;
-  border: 1px solid rgb(255 255 255 / 62%);
-  border-radius: 1.35rem;
+  width: min(22rem, 29vw);
+  padding: 0.85rem 1rem;
+  border: 1px solid rgb(255 255 255 / 38%);
+  border-radius: 1rem;
   background: var(--recommendation-glass-background);
-  box-shadow: 0 1.25rem 3rem rgb(55 43 27 / 8%);
+  box-shadow: 0 1rem 2.5rem rgb(55 43 27 / 4%);
   backdrop-filter: blur(16px) saturate(115%);
   -webkit-backdrop-filter: blur(16px) saturate(115%);
   pointer-events: none;
@@ -100,10 +106,12 @@
 .metadata h2 {
   margin: 0;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(2.4rem, 5vw, 5.25rem);
+  font-size: clamp(2.2rem, 3.2vw, 3rem);
   font-weight: 500;
   letter-spacing: -0.06em;
-  line-height: 0.95;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .details {
@@ -191,9 +199,9 @@
 .diffusionBackdrop span {
   position: absolute;
   display: block;
-  background-color: rgb(var(--recommendation-accent-rgb) / 30%);
+  background-color: rgb(var(--recommendation-accent-rgb) / 18%);
   filter: blur(3.5rem);
-  opacity: 0.95;
+  opacity: 0.55;
   transition:
     inset 620ms cubic-bezier(0.2, 0.8, 0.2, 1),
     width 620ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -223,7 +231,7 @@
   width: clamp(18rem, 32vw, 30rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  opacity: 0.72 !important;
+  opacity: 0.45 !important;
 }
 
 .diffusionTertiary {
@@ -232,7 +240,7 @@
   width: clamp(19rem, 35vw, 34rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  opacity: 0.56 !important;
+  opacity: 0.3 !important;
 }
 
 .experience[data-category='book'] .diffusionPrimary {
@@ -355,14 +363,17 @@
   top: 50%;
   left: 50%;
   z-index: 1;
-  width: min(38vw, 26rem);
+  width: min(29vw, 23rem);
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
-  box-shadow: 0 1.75rem 3rem rgb(0 0 0 / 20%);
+  box-shadow: 0.75rem 1.5rem 2.5rem rgb(65 52 35 / 17%);
   cursor: pointer;
-  transform: translate3d(-50%, -50%, 0) rotateX(var(--rx)) rotateY(var(--ry));
+  user-select: none;
+  -webkit-user-select: none;
+  transform: translate3d(-50%, -50%, 0) rotateX(calc(var(--rx) - 6deg))
+    rotateY(calc(var(--ry) + 20deg)) rotateZ(1.5deg);
   transform-style: preserve-3d;
 }
 
@@ -391,29 +402,19 @@
   transition: none;
 }
 
-.cssObject[data-offset='-2'] {
-  transform: translate3d(-155%, -42%, -8rem) rotateX(var(--rx))
-    rotateY(calc(var(--ry) + 20deg)) rotateZ(-12deg) scale(0.62);
-}
-
 .cssObject[data-offset='-1'] {
-  transform: translate3d(-102%, -48%, -4rem) rotateX(var(--rx))
-    rotateY(calc(var(--ry) + 12deg)) rotateZ(-6deg) scale(0.8);
+  transform: translate3d(-172%, -30%, -7rem) rotateX(var(--rx))
+    rotateY(calc(var(--ry) + 18deg)) rotateZ(-5deg) scale(0.65);
 }
 
 .cssObject[data-offset='1'] {
-  transform: translate3d(6%, -44%, -4rem) rotateX(var(--rx))
-    rotateY(calc(var(--ry) - 12deg)) rotateZ(7deg) scale(0.8);
-}
-
-.cssObject[data-offset='2'] {
-  transform: translate3d(58%, -38%, -8rem) rotateX(var(--rx))
-    rotateY(calc(var(--ry) - 20deg)) rotateZ(13deg) scale(0.62);
+  transform: translate3d(75%, -50%, -8rem) rotateX(var(--rx))
+    rotateY(calc(var(--ry) - 26deg)) rotateZ(5deg) scale(0.62);
 }
 
 .cssDisc {
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 0.15rem;
 }
 
 .cssFace,
@@ -435,28 +436,36 @@
 
 .cssDisc .cssFace,
 .cssDisc .cssFace > * {
-  border-radius: 50%;
+  border-radius: 0.15rem;
 }
 
 .cssDiscEdge {
+  inset: 1% auto auto 50%;
+  width: 98%;
+  height: 98%;
   border-radius: 50%;
-  background: #8f9398;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 80%);
-  transform: translateZ(-0.2rem) scale(1.012);
+  background:
+    radial-gradient(circle, transparent 8%, rgb(255 255 255 / 32%) 9%, transparent 13%),
+    conic-gradient(from 22deg, #b4bdc4, #eff4f7 11%, #c9d9e4 18%, #e1d5df 24%,
+      #ece4c5 29%, #c3cbd0 36%, #fafcfc 49%, #aeb9c1 57%, #d9e1e5 67%,
+      #d9d1e4 74%, #d0dfd6 81%, #eff3ef 89%, #b4bdc4);
+  box-shadow: 0.65rem 1.25rem 1.75rem rgb(65 52 35 / 14%),
+    inset 0 0 0 1px rgb(255 255 255 / 85%), inset 0 0 0 0.3rem rgb(100 110 120 / 18%);
+  transform: translateZ(-0.15rem);
 }
 
 .cssDiscHub {
   position: absolute;
   top: 50%;
-  left: 50%;
-  z-index: 3;
-  width: 18%;
+  left: 99%;
+  z-index: 1;
+  width: 13%;
   aspect-ratio: 1;
-  border: 0.7rem solid rgb(210 214 218 / 92%);
+  border: 0.35rem solid rgb(210 219 224 / 75%);
   border-radius: 50%;
-  background: #f7f6f1;
+  background: #ebe5db;
   box-shadow: 0 0 0 1px rgb(0 0 0 / 26%);
-  transform: translate3d(-50%, -50%, 0.56rem);
+  transform: translate3d(-50%, -50%, -0.1rem);
 }
 
 .cssBook {
@@ -493,9 +502,17 @@
 
 .cssBookSpine {
   right: auto;
-  width: 0.78rem;
-  background: #252525;
-  transform: translate3d(-0.38rem, 0, 0) rotateY(90deg);
+  display: grid;
+  width: var(--book-depth, 1.4rem);
+  place-items: center;
+  padding-block: 0.8rem;
+  color: var(--object-text, #fffaf0);
+  background: var(--book-spine-background, var(--object-ink, #40302b));
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  writing-mode: vertical-rl;
+  transform-origin: left center;
+  transform: translateZ(0.42rem) rotateY(90deg);
 }
 
 .generatedCover {
@@ -650,6 +667,10 @@
   color: rgb(var(--recommendation-accent-strong-rgb));
 }
 
+.experience[data-mode='catalog'] .credits {
+  transform: translateY(var(--recommendation-credits-offset));
+}
+
 .credits .coverCredit {
   max-width: min(62rem, 72%);
 }
@@ -670,6 +691,9 @@
 
 @media (max-width: 760px) {
   .poster {
+    display: grid;
+    grid-template-areas: 'header' 'stage' 'credits';
+    grid-template-rows: auto minmax(20rem, 1fr) auto;
     min-height: max(44rem, calc(100svh - 5rem));
   }
 
@@ -678,9 +702,10 @@
   }
 
   .topBar {
-    top: 1rem;
-    right: 1rem;
-    left: 1rem;
+    position: relative;
+    grid-area: header;
+    inset: auto;
+    margin: 1rem;
     flex-direction: column;
     align-items: stretch;
     gap: 0.55rem;
@@ -716,34 +741,51 @@
     padding-inline: 0.45rem;
   }
 
+  .stage {
+    position: relative;
+    grid-area: stage;
+    inset: auto;
+    min-height: 20rem;
+  }
+
   .cssObject {
-    width: min(72vw, 23rem);
+    width: min(57vw, 18rem);
   }
 
   .cssObject[data-offset='-1'] {
-    transform: translate3d(-136%, -47%, -5rem) rotateY(16deg) scale(0.76);
+    transform: translate3d(-205%, -47%, -5rem) rotateY(18deg) scale(0.62);
   }
 
   .cssObject[data-offset='1'] {
-    transform: translate3d(37%, -47%, -5rem) rotateY(-16deg) scale(0.76);
+    transform: translate3d(104%, -47%, -5rem) rotateY(-24deg) scale(0.62);
   }
 
   .posterIndex {
-    bottom: 7.5rem;
-    left: 1rem;
+    position: relative;
+    grid-area: stage;
+    align-self: end;
+    justify-self: start;
+    inset: auto;
+    margin: 0.5rem 1rem;
     padding: 0.25rem 0.35rem;
     background: rgb(var(--recommendation-paper-rgb) / 82%);
   }
 
   .fallbackNotice {
-    right: 1rem;
-    bottom: 7.3rem;
+    position: relative;
+    grid-area: stage;
+    align-self: end;
+    justify-self: end;
+    inset: auto;
+    max-width: 65%;
+    margin: 0.5rem 1rem;
   }
 
   .credits {
-    right: 1rem;
-    bottom: 1rem;
-    left: 1rem;
+    position: relative;
+    grid-area: credits;
+    inset: auto;
+    margin: 1rem;
     display: grid;
     gap: 0.35rem;
     padding: 0.65rem 0.75rem;
@@ -754,8 +796,12 @@
   }
 
   .navigation {
-    right: 0.65rem;
-    left: 0.65rem;
+    position: relative;
+    grid-area: stage;
+    align-self: center;
+    inset: auto;
+    margin: 0 0.65rem;
+    transform: none;
   }
 
   .diffusionBackdrop span {

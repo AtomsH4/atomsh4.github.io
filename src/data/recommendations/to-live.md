@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://covers.openlibrary.org/b/id/6823968-L.jpg?default=false"
-  sourceUrl: "https://openlibrary.org/works/OL15861449W"
-  provider: open-library
-  credit: "Open Library cover repository"
+  src: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1670922347i/66093249.jpg"
+  sourceUrl: "https://www.goodreads.com/book/show/66093249"
+  provider: goodreads
+  credit: "Goodreads / 余华《活着》封面"
 ---

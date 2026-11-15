@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://coverartarchive.org/release-group/695dd59f-d70e-4960-b5fc-e6864eaa2e81/front-1200"
-  sourceUrl: "https://musicbrainz.org/release-group/695dd59f-d70e-4960-b5fc-e6864eaa2e81"
-  provider: cover-art-archive
-  credit: "Cover Art Archive / MusicBrainz contributors"
+  src: "https://p1.music.126.net/V34GxyIJdz7vcdptDI_g-g==/109951172495731859.jpg"
+  sourceUrl: "https://music.163.com/album?id=356292038"
+  provider: netease
+  credit: "网易云音乐 / 单依纯《纯妹妹》封面"
 ---

@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://raw.githubusercontent.com/standardebooks/w-somerset-maugham_the-moon-and-sixpence/master/images/cover.jpg"
-  sourceUrl: "https://github.com/standardebooks/w-somerset-maugham_the-moon-and-sixpence"
+  src: "https://cdn.jsdelivr.net/gh/standardebooks/w-somerset-maugham_the-moon-and-sixpence@master/images/cover.jpg"
+  sourceUrl: "https://standardebooks.org/ebooks/w-somerset-maugham/the-moon-and-sixpence"
   provider: standard-ebooks
   credit: "Standard Ebooks contributors"
 ---

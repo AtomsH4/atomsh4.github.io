@@ -10,6 +10,11 @@ import { noteRedirects } from './config/note-redirects.mjs';
 export default defineConfig({
   site: 'https://atomsh4.github.io',
   base: '/',
+  vite: {
+    optimizeDeps: {
+      include: ['three', '@react-three/fiber', '@react-three/drei'],
+    },
+  },
   markdown: {
     processor: satteri({ hastPlugins: [blogTables] }),
   },

@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -9,7 +11,7 @@ import {
 
 import { RecommendationFallbackStage } from './RecommendationFallbackStage';
 import styles from './RecommendationExperience.module.css';
-import { RecommendationStage } from './RecommendationStage';
+import { RecommendationStageBoundary } from './RecommendationStageBoundary';
 import {
   filterRecommendationItems,
   getAdjacentRecommendationId,
@@ -23,6 +25,12 @@ import {
   type RecommendationItem,
 } from './recommendation-types';
 import { useWebGLAvailability } from './useWebGLAvailability';
+
+const RecommendationStage = lazy(() =>
+  import('./RecommendationStage').then((module) => ({
+    default: module.RecommendationStage,
+  })),
+);
 
 export type RecommendationExperienceProps =
   | {
@@ -215,6 +223,16 @@ export const RecommendationExperience = (
     return <p className={styles.emptyState}>推荐正在整理中。</p>;
   }
 
+  const fallbackStage = activeItem ? (
+    <RecommendationFallbackStage
+      items={filteredItems}
+      activeId={visibleActiveId ?? activeItem.id}
+      compact={compact}
+      reducedMotion={reducedMotion}
+      onSelect={selectItem}
+    />
+  ) : null;
+
   return (
     <section
       className={styles.experience}
@@ -253,22 +271,23 @@ export const RecommendationExperience = (
           >
             <div className={styles.stage}>
               {status === 'available' && visibleActiveId ? (
-                <RecommendationStage
-                  items={filteredItems}
-                  activeId={visibleActiveId}
-                  compact={compact}
-                  reducedMotion={reducedMotion}
-                  onSelect={selectItem}
+                <RecommendationStageBoundary
+                  fallback={fallbackStage}
                   onFailure={markFailed}
-                />
+                >
+                  <Suspense fallback={fallbackStage}>
+                    <RecommendationStage
+                      items={filteredItems}
+                      activeId={visibleActiveId}
+                      compact={compact}
+                      reducedMotion={reducedMotion}
+                      onSelect={selectItem}
+                      onFailure={markFailed}
+                    />
+                  </Suspense>
+                </RecommendationStageBoundary>
               ) : (
-                <RecommendationFallbackStage
-                  items={filteredItems}
-                  activeId={visibleActiveId ?? activeItem.id}
-                  compact={compact}
-                  reducedMotion={reducedMotion}
-                  onSelect={selectItem}
-                />
+                fallbackStage
               )}
             </div>
 

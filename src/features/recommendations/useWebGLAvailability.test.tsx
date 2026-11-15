@@ -6,7 +6,7 @@ import { useWebGLAvailability } from './useWebGLAvailability';
 describe('useWebGLAvailability', () => {
   afterEach(() => vi.restoreAllMocks());
 
-  it('reports unavailable when neither WebGL context can be created', async () => {
+  it('reports unavailable when the renderer cannot obtain WebGL 2', async () => {
     const getContext = vi
       .spyOn(HTMLCanvasElement.prototype, 'getContext')
       .mockReturnValue(null);
@@ -16,8 +16,19 @@ describe('useWebGLAvailability', () => {
     await waitFor(() => expect(result.current.status).toBe('unavailable'));
     expect(getContext.mock.calls.map(([contextId]) => contextId)).toEqual([
       'webgl2',
-      'webgl',
     ]);
+  });
+
+  it('releases its probe context before mounting the stage', async () => {
+    const loseContext = vi.fn();
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
+      getExtension: () => ({ loseContext }),
+    } as unknown as WebGL2RenderingContext);
+
+    const { result } = renderHook(() => useWebGLAvailability());
+
+    await waitFor(() => expect(result.current.status).toBe('available'));
+    expect(loseContext).toHaveBeenCalledOnce();
   });
 
   it('can be moved to failed after a runtime context error', async () => {

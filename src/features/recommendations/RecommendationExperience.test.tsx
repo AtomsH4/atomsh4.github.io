@@ -104,14 +104,14 @@ afterEach(() => {
 });
 
 describe('RecommendationExperience', () => {
-  it('keeps content in the poster while placing diffusion on the section background', () => {
+  it('keeps content in the poster while loading its stage independently', async () => {
     render(<RecommendationExperience items={items} mode="catalog" />);
 
     const experience = screen.getByLabelText('推荐浏览');
     const poster = screen.getByTestId('recommendation-poster');
     const diffusion = screen.getByTestId('recommendation-diffusion-backdrop');
 
-    expect(poster).toContainElement(screen.getByTestId('recommendation-stage'));
+    expect(poster).toContainElement(await screen.findByTestId('recommendation-stage'));
     expect(diffusion.parentElement).toBe(experience);
     expect(poster).not.toContainElement(diffusion);
     expect(

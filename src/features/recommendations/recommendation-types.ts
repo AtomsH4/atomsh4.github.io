@@ -6,6 +6,10 @@ export const remoteCoverProviderValues = [
   'standard-ebooks',
   'netflix',
   'youtube',
+  'netease',
+  'wikimedia',
+  'goodreads',
+  'tmdb',
 ] as const;
 
 export type RecommendationCategory =

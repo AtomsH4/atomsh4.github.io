@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://coverartarchive.org/release-group/fe9bf6c3-dbe7-3170-baf4-ebe31d2b40d7/front-1200"
-  sourceUrl: "https://musicbrainz.org/release-group/fe9bf6c3-dbe7-3170-baf4-ebe31d2b40d7"
-  provider: cover-art-archive
-  credit: "Cover Art Archive / MusicBrainz contributors"
+  src: "https://p1.music.126.net/E0ynLFbtqou5cu1iJrvUEQ==/109951163081327547.jpg"
+  sourceUrl: "https://music.163.com/album?id=29698"
+  provider: netease
+  credit: "网易云音乐 / 王菲《寓言》封面"
 ---

@@ -17,8 +17,10 @@ export const useWebGLAvailability = (): {
 
     try {
       const canvas = document.createElement('canvas');
-      const context =
-        canvas.getContext('webgl2') ?? canvas.getContext('webgl');
+      // The current renderer requires WebGL 2. Release this temporary probe
+      // so the stage does not need a second active GPU context.
+      const context = canvas.getContext('webgl2');
+      context?.getExtension?.('WEBGL_lose_context')?.loseContext();
 
       if (active) {
         setStatus(context ? 'available' : 'unavailable');

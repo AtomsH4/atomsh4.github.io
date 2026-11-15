@@ -88,7 +88,7 @@ describe('recommendations content schema', () => {
     );
 
     expect(source).toContain(
-      'raw.githubusercontent.com/standardebooks/w-somerset-maugham_the-moon-and-sixpence/master/images/cover.jpg',
+      'cdn.jsdelivr.net/gh/standardebooks/w-somerset-maugham_the-moon-and-sixpence@master/images/cover.jpg',
     );
     expect(source).toContain('provider: standard-ebooks');
     expect(source).toContain('credit: "Standard Ebooks contributors"');

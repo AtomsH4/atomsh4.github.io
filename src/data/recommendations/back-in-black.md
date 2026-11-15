@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://coverartarchive.org/release-group/d3bc1a64-7561-3787-b680-0003aa50f8f1/front-1200"
-  sourceUrl: "https://musicbrainz.org/release-group/d3bc1a64-7561-3787-b680-0003aa50f8f1"
-  provider: cover-art-archive
-  credit: "Cover Art Archive / MusicBrainz contributors"
+  src: "https://upload.wikimedia.org/wikipedia/commons/9/92/ACDC_Back_in_Black.png"
+  sourceUrl: "https://commons.wikimedia.org/wiki/File:ACDC_Back_in_Black.png"
+  provider: wikimedia
+  credit: "Wikimedia Commons / AC/DC《Back in Black》封面"
 ---

@@ -37,9 +37,56 @@ const items: RecommendationItem[] = [
   },
 ];
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
 
 describe('RecommendationFallbackStage', () => {
+  it('resamples the spine when the same book receives a new cover URL', () => {
+    let rgb = [29, 63, 87];
+    let complete = true;
+    vi.spyOn(HTMLImageElement.prototype, 'naturalWidth', 'get').mockReturnValue(200);
+    vi.spyOn(HTMLImageElement.prototype, 'naturalHeight', 'get').mockReturnValue(300);
+    vi.spyOn(HTMLImageElement.prototype, 'complete', 'get').mockImplementation(() => complete);
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
+      drawImage: vi.fn(),
+      getImageData: () => ({
+        width: 12,
+        height: 64,
+        data: new Uint8ClampedArray(Array.from({ length: 12 * 64 }, () => [...rgb, 255]).flat()),
+      }),
+    } as unknown as CanvasRenderingContext2D);
+    const book: RecommendationItem = {
+      ...items[1],
+      cover: {
+        kind: 'remote',
+        src: 'https://example.com/blue.jpg',
+        sourceUrl: 'https://example.com/book',
+        provider: 'open-library',
+        credit: 'Book cover',
+      },
+    };
+    const props = { activeId: book.id, compact: false, reducedMotion: false, onSelect: vi.fn() };
+    const { rerender } = render(<RecommendationFallbackStage {...props} items={[book]} />);
+    // A cached image may finish loading before React attaches onLoad.
+    const object = screen.getByRole('button', { name: '旋转 Book title' });
+    expect(object.style.getPropertyValue('--object-ink')).toBe('#1d3f57');
+
+    complete = false;
+    rerender(<RecommendationFallbackStage {...props} items={[{
+      ...book,
+      cover: { ...book.cover, kind: 'remote', src: 'https://example.com/cream.jpg' } as RecommendationItem['cover'],
+    }]} />);
+    expect(object.style.getPropertyValue('--object-ink')).not.toBe('#1d3f57');
+
+    rgb = [238, 228, 202];
+    complete = true;
+    fireEvent.load(screen.getByRole('img', { name: 'Book title 封面' }));
+    expect(object.style.getPropertyValue('--object-ink')).toBe('#eee4ca');
+    expect(object.style.getPropertyValue('--object-text')).toBe('#24211d');
+  });
+
   it('renders one active physical presentation and its neighbor', () => {
     render(
       <RecommendationFallbackStage

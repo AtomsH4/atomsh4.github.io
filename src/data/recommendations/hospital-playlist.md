@@ -9,8 +9,8 @@ featured: false
 draft: false
 cover:
   kind: remote
-  src: "https://occ-0-988-993.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABXz6fYrErIOBHwmhpDarBaAhO4z0ZTgfL9nqgOXx1KYJYDaifJnP39BOmMrqEhEFpcA0TomlstCkrSTley7v5_zjs_KXnNkcyTkc.jpg?r=8dd"
-  sourceUrl: "https://www.netflix.com/title/81239224"
-  provider: netflix
-  credit: "Netflix official title artwork"
+  src: "https://media.themoviedb.org/t/p/w780/9JM1O5N8wYLgtROBXjvganJUn0p.jpg"
+  sourceUrl: "https://www.themoviedb.org/tv/96102"
+  provider: tmdb
+  credit: "TMDB /《机智的医生生活》海报"
 ---

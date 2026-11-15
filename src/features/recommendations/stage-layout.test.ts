@@ -11,11 +11,9 @@ describe('getStageItems', () => {
     );
 
     expect(result.map(({ id, offset }) => [id, offset])).toEqual([
-      ['a', -2],
       ['b', -1],
       ['c', 0],
       ['d', 1],
-      ['e', 2],
     ]);
   });
 
@@ -49,40 +47,22 @@ describe('getStageItems', () => {
   });
 });
 
-describe('desktopSlots', () => {
-  it('uses the fixed poster composition', () => {
-    expect(desktopSlots).toEqual({
-      '-2': {
-        position: [-4.1, -0.6, -1.4],
-        rotation: [-0.08, 0.35, -0.22],
-        scale: 0.62,
-      },
-      '-1': {
-        position: [-1.85, -0.15, -0.7],
-        rotation: [0.04, 0.2, -0.1],
-        scale: 0.8,
-      },
-      '0': {
-        position: [0.55, -0.1, 0],
-        rotation: [-0.04, -0.12, 0.05],
-        scale: 1.05,
-      },
-      '1': {
-        position: [3, 0.35, -0.65],
-        rotation: [0.08, -0.22, 0.12],
-        scale: 0.8,
-      },
-      '2': {
-        position: [5.35, 0.7, -1.35],
-        rotation: [-0.05, -0.38, 0.2],
-        scale: 0.62,
-      },
-    });
+describe('stage composition', () => {
+  it('gives the focus more size and depth than both neighbors', () => {
+    for (const slots of [desktopSlots, compactSlots]) {
+      for (const offset of ['-1', '1'] as const) {
+        expect(slots['0'].scale).toBeGreaterThan(slots[offset].scale);
+        expect(slots['0'].position[2]).toBeGreaterThan(slots[offset].position[2]);
+      }
+      expect(slots['-1'].position[0]).toBeLessThan(slots['0'].position[0]);
+      expect(slots['1'].position[0]).toBeGreaterThan(slots['0'].position[0]);
+      expect(Math.abs(slots['0'].rotation[1])).toBeGreaterThan(0.3);
+    }
   });
 
-  it('offsets the desktop focus and keeps compact neighbors at the edges', () => {
-    expect(desktopSlots['0'].position).toEqual([0.55, -0.1, 0]);
-    expect(compactSlots['0'].position).toEqual([0, -0.2, 0]);
-    expect(Math.abs(compactSlots['1'].position[0])).toBeGreaterThan(2);
+  it('centers the compact focus while leaving room for desktop metadata', () => {
+    expect(compactSlots['0'].position[0]).toBe(0);
+    expect(desktopSlots['0'].position[0]).toBeGreaterThan(0);
+    expect(Math.abs(compactSlots['1'].position[0])).toBeGreaterThan(3);
   });
 });

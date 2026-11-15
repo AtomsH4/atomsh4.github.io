@@ -1,5 +1,4 @@
 import {
-  ContactShadows,
   Environment,
   Lightformer,
   PresentationControls,
@@ -76,6 +75,30 @@ const isSlotSettled = (group: THREE.Group, slot: StageSlot) => {
     rotationDistance < 0.001 &&
     Math.abs(group.scale.x - slot.scale) < 0.001
   );
+};
+
+const StageCamera = ({ compact }: { compact: boolean }) => {
+  const { camera, size, get, set, invalidate } = useThree();
+
+  useLayoutEffect(() => {
+    if (!(camera instanceof THREE.PerspectiveCamera)) return;
+    const aspect = size.width / Math.max(1, size.height);
+    const visibleWidth = compact ? 5.9 : Math.max(11.8, aspect * 6.4);
+    camera.fov = 34;
+    const distance = visibleWidth / (2 * Math.tan(THREE.MathUtils.degToRad(17)) * aspect);
+    camera.position.set(0, 0, distance);
+    camera.updateProjectionMatrix();
+    const viewport = get().viewport;
+    set({
+      viewport: {
+        ...viewport,
+        ...viewport.getCurrentViewport(camera, new THREE.Vector3(), size),
+      },
+    });
+    invalidate();
+  }, [camera, compact, get, invalidate, set, size.width, size.height]);
+
+  return null;
 };
 
 const ObjectPresentation = ({
@@ -267,7 +290,7 @@ const CanvasTrack = ({
   const settlingRef = useRef(false);
   const { gl, invalidate, size, viewport } = useThree();
   const pixelsToWorld = viewport.width / Math.max(1, size.width);
-  const spacingWorld = compact ? 2.45 : 2.4;
+  const spacingWorld = compact ? 3.65 : 4.1;
   const spacingPx = spacingWorld / pixelsToWorld;
 
   const setPanning = (panning: boolean) => {
@@ -480,7 +503,7 @@ export const RecommendationStage = ({
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       dpr={[1, 1.5]}
       frameloop="demand"
-      shadows
+      shadows={{ type: THREE.VSMShadowMap }}
       camera={{ position: [0, 0, 9], fov: 34 }}
       gl={{
         alpha: true,
@@ -489,19 +512,35 @@ export const RecommendationStage = ({
       }}
     >
       <ContextLossListener onFailure={onFailure} />
-      <ambientLight intensity={0.8} />
+      <StageCamera compact={compact} />
+      <ambientLight intensity={0.35} />
+      <hemisphereLight args={['#fffaf2', '#9a9081', 0.45]} />
       <directionalLight
-        position={[4, 6, 7]}
-        intensity={2.2}
+        position={[-3, 4, 12]}
+        intensity={2.4}
         castShadow
+        shadow-mapSize={[512, 512]}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
+        shadow-camera-top={7}
+        shadow-camera-bottom={-7}
+        shadow-camera-near={1}
+        shadow-camera-far={28}
+        shadow-normalBias={0.035}
+        shadow-bias={-0.0001}
+        shadow-radius={5}
+        shadow-blurSamples={8}
       />
-      <Environment background={false}>
+      <directionalLight position={[5, 1, 5]} intensity={0.65} color="#e8efff" />
+      <Environment background={false} resolution={128}>
         <Lightformer
           form="rect"
-          intensity={2.5}
-          position={[0, 4, 5]}
-          scale={[8, 3]}
+          intensity={2.2}
+          position={[-4, 2, 5]}
+          scale={[3, 6]}
         />
+        <Lightformer form="rect" intensity={1.4} position={[0, 5, 3]} scale={[6, 2]} />
+        <Lightformer form="rect" intensity={2} position={[5, 1, 4]} scale={[1.5, 5]} />
       </Environment>
 
       <CanvasTrack
@@ -532,13 +571,10 @@ export const RecommendationStage = ({
         })}
       </CanvasTrack>
 
-      <ContactShadows
-        key={activeId}
-        frames={1}
-        opacity={0.2}
-        blur={2.5}
-        resolution={256}
-      />
+      <mesh position={[0, 0, -3.2]} receiveShadow>
+        <planeGeometry args={[40, 24]} />
+        <shadowMaterial transparent opacity={0.075} color="#5e5141" depthWrite={false} />
+      </mesh>
     </Canvas>
   );
 };

@@ -9,8 +9,8 @@ featured: true
 draft: false
 cover:
   kind: remote
-  src: "https://covers.openlibrary.org/b/id/12947700-L.jpg?default=false"
-  sourceUrl: "https://openlibrary.org/works/OL515754W"
+  src: "https://covers.openlibrary.org/b/id/10331950-L.jpg"
+  sourceUrl: "https://openlibrary.org/books/OL28677690M"
   provider: open-library
-  credit: "Open Library cover repository"
+  credit: "Open Library / Harcourt 版《Flowers for Algernon》封面"
 ---
