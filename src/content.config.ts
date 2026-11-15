@@ -71,6 +71,7 @@ const collections = {
     schema: entrySchema.extend({
       repository: z.string().url(),
       kind: z.enum(['own', 'fork', 'member']),
+      order: z.number().int().nonnegative().optional(),
     }),
   }),
   recommendations: defineCollection({

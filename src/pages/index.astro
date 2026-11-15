@@ -5,7 +5,7 @@ import HeroGradient from '../components/HeroGradient.astro';
 import HomeIntro from '../components/HomeIntro.astro';
 import HomeSignature from '../components/HomeSignature.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getPublishedEntries } from '../lib/content';
+import { getPublishedEntries, getPublishedProjects } from '../lib/content';
 import { joinBasePath } from '../lib/site-path';
 
 const [blogEntries, noteEntries, projectEntries] = await Promise.all([
@@ -15,7 +15,7 @@ const [blogEntries, noteEntries, projectEntries] = await Promise.all([
 ]);
 const recentBlogEntries = getPublishedEntries(blogEntries).slice(0, 3);
 const recentNoteEntries = getPublishedEntries(noteEntries).slice(0, 3);
-const featuredProjects = getPublishedEntries(projectEntries).filter(
+const featuredProjects = getPublishedProjects(projectEntries).filter(
   (entry) => entry.data.featured,
 );
 const basePath = import.meta.env.BASE_URL;

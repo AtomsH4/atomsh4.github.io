@@ -34,6 +34,7 @@ describe('projects content schema', () => {
       pubDate: '2026-08-31',
       repository: 'https://github.com/CherryHQ/cherry-studio',
       kind,
+      order: 0,
     }).success).toBe(true);
   });
 
