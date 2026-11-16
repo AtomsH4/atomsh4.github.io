@@ -668,6 +668,9 @@
 }
 
 .experience[data-mode='catalog'] .credits {
+  right: 0;
+  left: 0;
+  margin-inline: auto;
   transform: translateY(var(--recommendation-credits-offset));
 }
 

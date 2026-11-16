@@ -368,7 +368,7 @@ export const RecommendationExperience = (
               </p>
             )}
 
-            <div className={styles.credits}>
+            <div className={mode === 'catalog' ? `${styles.credits} container` : styles.credits}>
               <p className={styles.coverCredit}>
                 {activeItem.cover.kind === 'licensed' ? (
                   <>
