@@ -21,6 +21,7 @@
 
 .experience[data-mode='catalog'] {
   --recommendation-credits-offset: clamp(2rem, 4vw, 3.5rem);
+  --recommendation-credits-footer-shift: 3.75rem;
 
   padding-bottom: var(--recommendation-credits-offset);
 }
@@ -671,7 +672,9 @@
   right: 0;
   left: 0;
   margin-inline: auto;
-  transform: translateY(var(--recommendation-credits-offset));
+  transform: translateY(
+    calc(var(--recommendation-credits-offset) + var(--recommendation-credits-footer-shift))
+  );
 }
 
 .credits .coverCredit {
@@ -693,6 +696,10 @@
 }
 
 @media (max-width: 760px) {
+  .experience[data-mode='catalog'] {
+    --recommendation-credits-footer-shift: 3rem;
+  }
+
   .poster {
     display: grid;
     grid-template-areas: 'header' 'stage' 'credits';
