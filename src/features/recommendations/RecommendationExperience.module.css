@@ -626,24 +626,6 @@
   opacity: 0.45;
 }
 
-.posterIndex {
-  position: absolute;
-  bottom: 5.1rem;
-  left: clamp(1.25rem, 3vw, 2.5rem);
-  z-index: 5;
-  margin: 0;
-  padding: 0.3rem 0.5rem;
-  border: 1px solid rgb(255 255 255 / 58%);
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: rgb(var(--recommendation-paper-rgb) / 64%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
 .credits {
   position: absolute;
   right: clamp(1.25rem, 3vw, 2.5rem);
@@ -768,17 +750,6 @@
 
   .cssObject[data-offset='1'] {
     transform: translate3d(104%, -47%, -5rem) rotateY(-24deg) scale(0.62);
-  }
-
-  .posterIndex {
-    position: relative;
-    grid-area: stage;
-    align-self: end;
-    justify-self: start;
-    inset: auto;
-    margin: 0.5rem 1rem;
-    padding: 0.25rem 0.35rem;
-    background: rgb(var(--recommendation-paper-rgb) / 82%);
   }
 
   .fallbackNotice {

@@ -196,9 +196,6 @@ export const RecommendationExperience = (
     filteredItems[0] ??
     null;
   const visibleActiveId = activeItem?.id ?? null;
-  const activePosition = activeItem
-    ? filteredItems.findIndex((item) => item.id === activeItem.id) + 1
-    : 0;
 
   useEffect(() => {
     if ((mode === 'catalog' && !hashReady) || !activeItem) {
@@ -354,11 +351,6 @@ export const RecommendationExperience = (
                 </button>
               </nav>
             )}
-
-            <p className={styles.posterIndex} aria-hidden="true">
-              {String(activePosition).padStart(2, '0')} /{' '}
-              {String(filteredItems.length).padStart(2, '0')}
-            </p>
 
             {(status === 'unavailable' || status === 'failed') && (
               <p className={styles.fallbackNotice}>

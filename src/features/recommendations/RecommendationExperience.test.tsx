@@ -123,7 +123,7 @@ describe('RecommendationExperience', () => {
       'data-mode',
       'catalog',
     );
-    expect(screen.getByText('01 / 01')).toBeVisible();
+    expect(screen.queryByText('01 / 01')).not.toBeInTheDocument();
     expect(screen.queryByText(/拖动画布|拖动作品/)).not.toBeInTheDocument();
   });
 
